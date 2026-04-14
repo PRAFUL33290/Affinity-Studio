@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1b1c1c",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e4e2e2",
+                    "outline-variant": "#bbc9ca",
+                    "on-primary-fixed-variant": "#004f53",
+                    "inverse-primary": "#3cdae2",
+                    "on-secondary-container": "#fffbff",
+                    "surface-variant": "#e4e2e2",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#63f7ff",
+                    "surface-dim": "#dbd9d9",
+                    "on-tertiary-fixed": "#1b1c1c",
+                    "surface-tint": "#00696e",
+                    "primary-container": "#00c4cc",
+                    "on-surface-variant": "#3c494a",
+                    "outline": "#6c7a7a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#efeded",
+                    "secondary-container": "#9246fd",
+                    "on-primary-fixed": "#002021",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#c8c6c6",
+                    "on-tertiary-container": "#444444",
+                    "secondary-fixed": "#ecdcff",
+                    "surface-bright": "#fbf9f8",
+                    "secondary-fixed-dim": "#d6baff",
+                    "inverse-surface": "#303030",
+                    "on-primary-container": "#004c4f",
+                    "surface": "#fbf9f8",
+                    "error": "#ba1a1a",
+                    "primary": "#00696e",
+                    "on-secondary-fixed-variant": "#5f00bf",
+                    "on-surface": "#1b1c1c",
+                    "tertiary": "#5e5e5e",
+                    "surface-container-high": "#eae8e7",
+                    "surface-container-low": "#f5f3f3",
+                    "on-secondary-fixed": "#280057",
+                    "secondary": "#7822e3",
+                    "primary-fixed-dim": "#3cdae2",
+                    "inverse-on-surface": "#f2f0f0",
+                    "background": "#fbf9f8",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#b2b1b1",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "tertiary-fixed": "#e4e2e2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .signature-gradient {
+            background: linear-gradient(45deg, #00c4cc, #9246fd);
+        }
+        .tonal-transition {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl flex justify-between items-center px-8 py-4 max-w-full mx-auto shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+<div class="text-2xl font-black tracking-tighter bg-gradient-to-r from-[#00c4cc] to-[#9246fd] bg-clip-text text-transparent">
+            Affinity Studio
+        </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 hover:text-teal-500 transition-colors font-['Manrope'] font-semibold tracking-tight text-sm" href="index.html">Products</a>
+<a class="text-teal-600 font-bold border-b-2 border-teal-500 pb-1 font-['Manrope'] font-semibold tracking-tight text-sm" href="tools.html">Tools</a>
+<a class="text-slate-600 hover:text-teal-500 transition-colors font-['Manrope'] font-semibold tracking-tight text-sm" href="showcase.html">Showcase</a>
+<a class="text-slate-600 hover:text-teal-500 transition-colors font-['Manrope'] font-semibold tracking-tight text-sm" href="pricing.html">Pricing</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-600 hover:text-teal-500 transition-colors font-['Manrope'] font-semibold text-sm">Sign In</button>
+<button class="signature-gradient text-white px-5 py-2 rounded-lg font-['Manrope'] font-bold text-sm hover:opacity-80 transition-all duration-300 active:scale-95">Buy Now</button>
+</div>
+</nav>
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+<!-- Hero Section -->
+<header class="mb-24 text-center">
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-on-surface mb-6">
+                Tools built for <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">precision.</span>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                Experience the next generation of creative software. Affinity Studio modules work seamlessly together, sharing a single file format for a truly fluid workflow.
+            </p>
+</header>
+<!-- Bento Grid: Featured Tools -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
+<!-- Photo Module (Large Focus) -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.02)] border border-outline-variant/10 group">
+<div class="grid md:grid-cols-2">
+<div class="p-10 flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+<span class="font-headline font-bold text-lg">Affinity Photo</span>
+</div>
+<h2 class="font-headline text-3xl font-bold mb-4 tracking-tight">Professional Image Editing</h2>
+<p class="text-on-surface-variant mb-8 leading-relaxed">
+                            The only fully-loaded photo editor integrated across macOS, Windows and iPad. Built for speed, power and precision.
+                        </p>
+<ul class="space-y-3 mb-10">
+<li class="flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Raw Development &amp; HDR Merging
+                            </li>
+<li class="flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Professional Retouching Tools
+                            </li>
+</ul>
+<button class="w-fit bg-surface-container-highest text-primary px-6 py-3 rounded-lg font-headline font-bold text-sm hover:brightness-95 transition-all">
+                            Explore Photo
+                        </button>
+</div>
+<div class="relative h-[400px] md:h-full overflow-hidden">
+<img alt="Professional photo editing workspace" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Modern workspace with high-end monitor showing professional photo editing software in a dark studio setting with neon teal accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2Hn7hs0btBcBY8oc6IkJOOLhxalXaeUKLrtzE55bqFtAquodmNzm4HEGvvgPv1B6jJ56fuwIagEwXkdT1SBXe7xl6fvcXqBWH6jOpD8d74Fki6DLXkgPIC1949_F2AI-GKgDNxrSG02lcQCXj0w5jPIrfHZ10KXi9WoK8-PSj14Ggk-Ci5u9zUbUwAaG_yriup5gGN5YEDCMKjMdMIHfQqsUgIKDIhEfq7D3n6xWrODO8MpGO7N9GW_W1-_jDXi-YMVS4BMRvDzz_"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+</div>
+</div>
+<!-- Designer Module -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.02)] border border-outline-variant/10 flex flex-col group">
+<div class="p-8">
+<div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-3 tracking-tight">Affinity Designer</h3>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        The award-winning vector graphics software setting the new industry standard.
+                    </p>
+<button class="text-secondary font-headline font-bold text-sm flex items-center gap-2 group/btn">
+                        Learn More <span class="material-symbols-outlined text-lg transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</div>
+<div class="mt-auto relative h-48 overflow-hidden">
+<img alt="Abstract vector art" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Vibrant abstract 3D vector shapes and geometric compositions with purple and teal lighting and smooth gradients" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwMxtM_0JWcqXOkP9ylq-aUK0TmAJpP_6y3JIFIvY0k0n75bUFbU1JuD8cs_pjcJW6nxFZM9c7LdWwa6ztwX3DoS3XIHe2Pbgko8L0n4QIkpeyQfAbm5Z5Azov2XSAv15Zhz3w96mcDwBUaK0sCx9pkoDwPwsvTTipraeQZ8j5scAkVF8Nzh5xrA1rNHsK9oe4JZiG-zESrBy285e7OyeB12TudVhDT3Ae4qouXYUtFZ_MgkaVHAdaVyRneq5O8eazGJiXxGpg-J66"/>
+</div>
+</div>
+<!-- Publisher Module -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.02)] border border-outline-variant/10 flex flex-col group">
+<div class="p-8">
+<div class="w-12 h-12 bg-teal-500/10 rounded-lg flex items-center justify-center text-teal-600 mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-3 tracking-tight">Affinity Publisher</h3>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Professional-grade desktop publishing software for magazines and books.
+                    </p>
+<button class="text-teal-600 font-headline font-bold text-sm flex items-center gap-2 group/btn">
+                        Learn More <span class="material-symbols-outlined text-lg transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</div>
+<div class="mt-auto relative h-48 overflow-hidden">
+<img alt="Editorial magazine layout" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Top-down view of high-end editorial magazine pages with clean typography and minimalist layout on a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoTvIilKVPM_NqHhr0JeSZwDy9KaHXBPhXCjyAWta_0JNgenIiVG2z15DtRi2q0uBnNcnyUxXNincCDcjtqDqRDQg71YtSaXDUtlmnz7XlAnB-_VmHZhDuDkWml2FydBftLMbfS3iP-RAywW7OcVrcM-HBPm2b3YUoHNOp8_q2jiRQ7aCtXAs5mbEIROtQlUNpoJADzYCoJ5LYcoYSFI18gRLSqlUI3kH1rlU2xCMPF5fZya3DU4wK-WBuKa9pnl8o5E1L0P_KIsHW"/>
+</div>
+</div>
+<!-- StudioLink Feature (Wide Content) -->
+<div class="md:col-span-8 signature-gradient rounded-xl p-1 relative overflow-hidden group">
+<div class="bg-surface-container-lowest w-full h-full rounded-[calc(0.75rem-1px)] p-10 flex flex-col md:flex-row items-center gap-10">
+<div class="flex-1">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+                            Technology
+                        </div>
+<h3 class="font-headline text-3xl font-bold mb-4 tracking-tight">StudioLink Integration</h3>
+<p class="text-on-surface-variant mb-8 leading-relaxed">
+                            The world’s first workflow technology that lets you instantly switch between Photo, Designer, and Publisher without leaving your current document.
+                        </p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-3xl text-primary-container">sync</span>
+<span class="material-symbols-outlined text-3xl text-secondary-container">layers</span>
+<span class="material-symbols-outlined text-3xl text-teal-400">speed</span>
+</div>
+</div>
+<div class="w-full md:w-1/3 aspect-square bg-surface-container-low rounded-xl flex items-center justify-center p-8">
+<div class="relative">
+<div class="w-32 h-32 rounded-full border-4 border-dashed border-primary/30 flex items-center justify-center animate-spin-slow">
+<span class="material-symbols-outlined text-4xl text-primary">hub</span>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 signature-gradient rounded-full shadow-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">flash_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Modules Section -->
+<div class="mb-32">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+<div class="max-w-xl">
+<h2 class="font-headline text-4xl font-bold tracking-tight mb-4 text-on-surface">Precision Modules</h2>
+<p class="text-on-surface-variant">Deep-dive into the specific toolsets that define the Affinity ecosystem.</p>
+</div>
+<div class="flex gap-2">
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature Card 1 -->
+<div class="group p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2">
+<span class="material-symbols-outlined text-4xl text-primary mb-6" data-weight="fill">brush</span>
+<h4 class="font-headline text-xl font-bold mb-3">Live Brush Engine</h4>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Experience the natural fluidity of our custom brush engine. Compatible with .abr files and sub-pixel precision.
+                    </p>
+<a class="text-primary font-bold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all" href="#">
+                        Technical Specs
+                        <span class="material-symbols-outlined text-base">east</span>
+</a>
+</div>
+<!-- Feature Card 2 -->
+<div class="group p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6" data-weight="fill">grid_view</span>
+<h4 class="font-headline text-xl font-bold mb-3">Grid &amp; Guide Logic</h4>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Set up advanced isometric grids, custom guide layouts, and powerful snapping for architectural precision.
+                    </p>
+<a class="text-secondary font-bold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all" href="#">
+                        Documentation
+                        <span class="material-symbols-outlined text-base">east</span>
+</a>
+</div>
+<!-- Feature Card 3 -->
+<div class="group p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2">
+<span class="material-symbols-outlined text-4xl text-teal-500 mb-6" data-weight="fill">history</span>
+<h4 class="font-headline text-xl font-bold mb-3">Infinite History</h4>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Scrub through thousands of history states. Save your history with the document to revert even months later.
+                    </p>
+<a class="text-teal-600 font-bold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all" href="#">
+                        Learn Workflow
+                        <span class="material-symbols-outlined text-base">east</span>
+</a>
+</div>
+</div>
+</div>
+<!-- CTA Section -->
+<section class="relative bg-on-background rounded-2xl p-12 md:p-20 overflow-hidden text-center text-white">
+<div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-primary opacity-20 blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-secondary opacity-20 blur-[120px]"></div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<h2 class="font-headline text-4xl md:text-5xl font-bold mb-8">Ready to elevate your creative process?</h2>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="signature-gradient px-8 py-4 rounded-lg font-headline font-bold text-lg hover:opacity-90 transition-all">Start Free Trial</button>
+<button class="bg-white/10 backdrop-blur-md px-8 py-4 rounded-lg font-headline font-bold text-lg hover:bg-white/20 transition-all">View All Tools</button>
+</div>
+<p class="mt-8 text-white/60 text-sm">No subscription. No hidden fees. Own it for life.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 border-t border-slate-200/10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto">
+<div class="col-span-1">
+<div class="text-lg font-bold text-slate-900 mb-6">Affinity Studio</div>
+<p class="font-['Inter'] text-xs tracking-wide text-slate-500 mb-6">
+                    © 2024 Affinity Studio. Editorial Precision for Creative Professionals.
+                </p>
+</div>
+<div>
+<h5 class="text-slate-900 font-bold text-sm mb-6 uppercase tracking-widest">Product</h5>
+<ul class="space-y-4">
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Affinity Photo</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Affinity Designer</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Affinity Publisher</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-slate-900 font-bold text-sm mb-6 uppercase tracking-widest">Support</h5>
+<ul class="space-y-4">
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Learning Hub</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Community Forum</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Release Notes</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-slate-900 font-bold text-sm mb-6 uppercase tracking-widest">Legal</h5>
+<ul class="space-y-4">
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Terms of Service</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Cookie Settings</a></li>
+<li><a class="text-slate-500 hover:text-teal-400 text-xs transition-colors" href="#">Press Kit</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>
