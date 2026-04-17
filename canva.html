@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évolution de Canva — Rapport Analytique 2012–2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: #f5f5f5;
+            --border: #e0e0e0;
+            --text: #1a1a1a;
+            --text-muted: #888888;
+            --nav-bg: rgba(255,255,255,0.88);
+            --tip-bg: rgba(142,229,110,0.07);
+            --green: #8EE56E;
+            --green-dark: #6DCF4C;
+            --green-text: #3a8a20;
+            --table-head: #f0f0f0;
+            --timeline-line: #e0e0e0;
+        }
+        html.dark {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #ffffff;
+            --text-muted: #777777;
+            --nav-bg: rgba(10,10,10,0.88);
+            --tip-bg: rgba(142,229,110,0.06);
+            --green-text: #8EE56E;
+            --table-head: #1e1e1e;
+            --timeline-line: #262626;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body, nav, table, td, th, blockquote {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── TOPBAR ── */
+        nav.topnav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .nav-back {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-muted); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--text); }
+        .nav-icon { width: 28px; height: 28px; border-radius: 6px; }
+        .nav-sep { color: var(--border); }
+        .nav-title { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+
+        .theme-toggle {
+            display: flex; align-items: center; gap: 8px;
+            background: none; border: 1px solid var(--border);
+            border-radius: 100px; padding: 6px 12px;
+            cursor: pointer; font-family: 'Inter', sans-serif;
+            font-size: 0.75rem; font-weight: 600;
+            color: var(--text-muted); transition: all 0.2s;
+        }
+        .theme-toggle:hover { border-color: var(--text-muted); color: var(--text); }
+        .toggle-track {
+            width: 28px; height: 16px; background: var(--border);
+            border-radius: 100px; position: relative;
+            transition: background 0.3s; flex-shrink: 0;
+        }
+        html.dark .toggle-track { background: var(--green); }
+        .toggle-thumb {
+            position: absolute; top: 2px; left: 2px;
+            width: 12px; height: 12px; background: #fff;
+            border-radius: 50%; transition: transform 0.3s;
+        }
+        html.dark .toggle-thumb { transform: translateX(12px); }
+
+        /* ── LAYOUT ── */
+        .page-layout {
+            max-width: 1400px; margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 60px;
+            align-items: start;
+            padding-top: 80px;
+        }
+
+        /* ── TOC ── */
+        .toc-panel {
+            position: sticky; top: 80px;
+            padding: 20px 0;
+        }
+        .toc-label {
+            font-size: 0.6rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: var(--text-muted); margin-bottom: 16px; display: block;
+        }
+        .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .toc-list a {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.8rem; font-weight: 500;
+            color: var(--text-muted); text-decoration: none;
+            padding: 7px 12px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s; line-height: 1.3;
+        }
+        .toc-list a svg { flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s; }
+        .toc-list a:hover { color: var(--text); background: var(--surface); }
+        .toc-list a:hover svg { opacity: 0.7; }
+        .toc-list a.active {
+            color: var(--green-text); border-left-color: var(--green);
+            font-weight: 600;
+        }
+        html.dark .toc-list a.active { color: var(--green); }
+        .toc-list a.active svg { opacity: 1; stroke: var(--green); }
+
+        .toc-sep { height: 1px; background: var(--border); margin: 12px 12px; }
+
+        /* ── ARTICLE ── */
+        .article { padding: 20px 0 120px; min-width: 0; }
+
+        /* Hero */
+        .report-hero {
+            padding-bottom: 64px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 72px;
+        }
+        .hero-eyebrow {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 28px;
+        }
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            background: var(--green); color: #1a1a1a;
+            padding: 6px 14px; border-radius: 2px;
+        }
+        .hero-date {
+            font-size: 0.75rem; color: var(--text-muted); font-weight: 500;
+        }
+        .report-hero h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900; letter-spacing: -0.03em;
+            line-height: 1.1; margin-bottom: 24px;
+        }
+        .report-hero h1 em { font-style: normal; color: var(--green); }
+        .report-hero .lead {
+            font-size: 1.05rem; color: var(--text-muted);
+            max-width: 700px; line-height: 1.85; margin-bottom: 36px;
+        }
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border);
+        }
+        .hstat {
+            background: var(--bg); padding: 24px 20px;
+            transition: background 0.2s;
+        }
+        .hstat:hover { background: var(--surface); }
+        .hstat-val {
+            font-size: 1.9rem; font-weight: 900;
+            letter-spacing: -0.04em; line-height: 1;
+            color: var(--text); margin-bottom: 6px;
+        }
+        .hstat-val span { color: var(--green); }
+        .hstat-lbl { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* Sections */
+        .section { margin-bottom: 72px; padding-bottom: 72px; border-bottom: 1px solid var(--border); }
+        .section:last-child { border-bottom: none; }
+        .section-num {
+            display: block; font-size: 0.62rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.22em;
+            color: var(--green-text); margin-bottom: 12px;
+        }
+        html.dark .section-num { color: var(--green); }
+        .section h2 {
+            font-size: clamp(1.5rem, 3vw, 2.3rem);
+            font-weight: 800; letter-spacing: -0.03em;
+            line-height: 1.15; margin-bottom: 32px;
+        }
+        .section h3 {
+            font-size: 1.15rem; font-weight: 700;
+            margin-top: 40px; margin-bottom: 16px;
+            padding-left: 16px;
+            border-left: 3px solid var(--green);
+        }
+        .section p {
+            font-size: 0.98rem; color: var(--text-muted);
+            line-height: 1.85; margin-bottom: 18px;
+        }
+        .section p strong { color: var(--text); font-weight: 700; }
+        .section p:last-child { margin-bottom: 0; }
+
+        /* Callout */
+        .callout {
+            padding: 22px 28px;
+            border-left: 3px solid var(--green);
+            background: var(--tip-bg);
+            margin: 28px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .callout p { margin: 0; font-size: 0.93rem; }
+        .callout strong { color: var(--green-text); }
+        html.dark .callout strong { color: var(--green); }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 32px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--timeline-line);
+        }
+        .tl-item {
+            position: relative;
+            margin-bottom: 0;
+            padding: 0 0 32px 28px;
+        }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-dot {
+            position: absolute;
+            left: -25px; top: 4px;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--border);
+            border: 2px solid var(--bg);
+            transition: background 0.2s;
+        }
+        .tl-item:hover .tl-dot { background: var(--green); }
+        .tl-item.highlight .tl-dot { background: var(--green); box-shadow: 0 0 0 4px rgba(142,229,110,0.15); }
+        .tl-year {
+            font-size: 0.65rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--green-text); margin-bottom: 6px; display: block;
+        }
+        html.dark .tl-year { color: var(--green); }
+        .tl-title {
+            font-size: 1rem; font-weight: 700;
+            margin-bottom: 6px; color: var(--text);
+        }
+        .tl-desc {
+            font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;
+        }
+        .tl-badge {
+            display: inline-block; font-size: 0.62rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            padding: 3px 8px; border-radius: 2px; margin-bottom: 8px;
+        }
+        .badge-g { background: rgba(142,229,110,0.1); color: var(--green-text); border: 1px solid rgba(142,229,110,0.3); }
+        .badge-b { background: rgba(0,0,0,0.04); color: var(--text-muted); border: 1px solid var(--border); }
+        html.dark .badge-g { color: var(--green); }
+        html.dark .badge-b { background: rgba(255,255,255,0.04); }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        .stat-card { background: var(--bg); padding: 28px 22px; transition: background 0.2s; }
+        .stat-card:hover { background: var(--surface); }
+        .stat-val {
+            font-size: 2rem; font-weight: 900;
+            letter-spacing: -0.04em; line-height: 1;
+            color: var(--text); margin-bottom: 8px;
+        }
+        .stat-val em { font-style: normal; color: var(--green); }
+        .stat-lbl { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* Two-Step */
+        .two-step {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border); margin: 32px 0;
+        }
+        .step-card { background: var(--bg); padding: 36px; transition: background 0.2s; }
+        .step-card:hover { background: var(--surface); }
+        .step-label {
+            font-size: 0.62rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: var(--green-text); margin-bottom: 12px; display: block;
+        }
+        html.dark .step-label { color: var(--green); }
+        .step-card h4 { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; }
+        .step-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+
+        /* Tables */
+        .table-wrap { overflow-x: auto; margin: 32px 0; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        thead tr { background: var(--table-head); border-bottom: 2px solid var(--border); }
+        thead th {
+            padding: 14px 20px; text-align: left;
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--text-muted); white-space: nowrap;
+        }
+        thead th:first-child { color: var(--text); }
+        tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: var(--surface); }
+        tbody td {
+            padding: 15px 20px; vertical-align: top;
+            line-height: 1.5; color: var(--text-muted);
+        }
+        tbody td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+
+        .chip {
+            display: inline-block; font-size: 0.62rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            padding: 3px 8px; border-radius: 2px;
+        }
+        .chip-g { background: rgba(142,229,110,0.1); color: var(--green-text); border: 1px solid rgba(142,229,110,0.3); }
+        .chip-n { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+        html.dark .chip-g { color: var(--green); }
+
+        /* Magic Studio grid */
+        .magic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border); margin: 32px 0;
+        }
+        .magic-card { background: var(--bg); padding: 32px; transition: background 0.2s; }
+        .magic-card:hover { background: var(--surface); }
+        .magic-icon { font-size: 1.4rem; margin-bottom: 14px; display: block; }
+        .magic-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .magic-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+        /* Sources */
+        .sources-list { display: flex; flex-direction: column; gap: 0; }
+        .src { font-size: 0.8rem; color: var(--text-muted); padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: baseline; }
+        .src:last-child { border-bottom: none; }
+        .src-n { font-size: 0.62rem; font-weight: 700; color: var(--green-text); flex-shrink: 0; min-width: 22px; }
+        html.dark .src-n { color: var(--green); }
+        .src a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .src a:hover { color: var(--text); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border); padding: 48px 40px; }
+        .footer-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .footer-logo img { width: 32px; height: 32px; border-radius: 7px; }
+        .footer-logo span { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); }
+        footer p { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ── Charts ── */
+        .chart-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 28px 24px 20px;
+            margin: 32px 0;
+        }
+        .chart-label {
+            font-size: 0.62rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--text-muted); margin-bottom: 20px; display: block;
+        }
+        .charts-duo {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 20px; margin: 32px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .page-layout { grid-template-columns: 1fr; padding: 0 20px; padding-top: 80px; }
+            .toc-panel { display: none; }
+            nav.topnav { padding: 0 20px; }
+            footer { padding: 40px 20px; }
+            .two-step { grid-template-columns: 1fr; }
+            .timeline { padding-left: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <nav class="topnav">
+        <div class="nav-left">
+            <a href="index.html" class="nav-back">
+                <img src="Affinity_(App)_Logo.svg.png" alt="Affinity" class="nav-icon">
+                ← Accueil
+            </a>
+            <span class="nav-sep">/</span>
+            <span class="nav-title">Rapport Canva 2012–2026</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+            <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </button>
+    </nav>
+
+    <div class="page-layout">
+
+        <!-- TOC -->
+        <aside class="toc-panel">
+            <span class="toc-label">Sommaire</span>
+            <ul class="toc-list">
+                <li><a href="#intro">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Introduction
+                </a></li>
+                <li><a href="#s1">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    1. Origines & ascendance
+                </a></li>
+                <li><a href="#s2">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    2. Le Two-Step Plan
+                </a></li>
+                <li><a href="#s3">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
+                    3. Acquisition d'Affinity
+                </a></li>
+                <li><a href="#s4">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    4. Stratégie Enterprise
+                </a></li>
+                <li><a href="#s5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    5. Révolution IA 2026
+                </a></li>
+                <li><a href="#s6">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    6. Finances & IPO
+                </a></li>
+                <li><a href="#sources">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Sources
+                </a></li>
+            </ul>
+            <div class="toc-sep"></div>
+            <ul class="toc-list">
+                <li><a href="comparatif.html">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><path d="M10 14L21 3"/><path d="M21 15v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>
+                    Adobe vs Canva ↗
+                </a></li>
+            </ul>
+        </aside>
+
+        <!-- ARTICLE -->
+        <article class="article">
+
+            <!-- HERO -->
+            <header class="report-hero" id="intro">
+                <div class="hero-eyebrow">
+                    <span class="hero-tag">Rapport Analytique</span>
+                    <span class="hero-date">2012 — 2026</span>
+                </div>
+                <h1>De la startup de Perth<br>à l'<em>hégémonie créative mondiale.</em></h1>
+                <p class="lead">Canva illustre l'une des ascensions les plus remarquables de l'histoire du logiciel. En moins d'une décennie, une idée née d'une salle de cours australienne a redéfini les frontières de la création numérique, démocratisé le design professionnel, et s'apprête à transformer les marchés mondiaux avec une valorisation IPO anticipée entre 195 et 210 milliards de dollars.</p>
+
+                <div class="hero-stats">
+                    <div class="hstat">
+                        <div class="hstat-val">265<span>M+</span></div>
+                        <div class="hstat-lbl">Utilisateurs actifs mensuels (2026)</div>
+                    </div>
+                    <div class="hstat">
+                        <div class="hstat-val">4<span>Md$</span></div>
+                        <div class="hstat-lbl">ARR annuel (fév. 2026)</div>
+                    </div>
+                    <div class="hstat">
+                        <div class="hstat-val">42<span>Md$</span></div>
+                        <div class="hstat-lbl">Valorisation privée (août 2025)</div>
+                    </div>
+                    <div class="hstat">
+                        <div class="hstat-val">190</div>
+                        <div class="hstat-lbl">Pays couverts, 100 langues</div>
+                    </div>
+                    <div class="hstat">
+                        <div class="hstat-val">8</div>
+                        <div class="hstat-lbl">Années consécutives de rentabilité</div>
+                    </div>
+                    <div class="hstat">
+                        <div class="hstat-val">5 500</div>
+                        <div class="hstat-lbl">Employés dans le monde</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 1. ORIGINES -->
+            <section class="section" id="s1">
+                <span class="section-num">01</span>
+                <h2>Origines et ascendance historique<br>La démocratisation comme vecteur de croissance</h2>
+
+                <p>La genèse de Canva s'inscrit non pas dans la géographie habituelle de la Silicon Valley, mais à <strong>Perth, en Australie</strong>. Melanie Perkins, alors étudiante à l'Université d'Australie-Occidentale, enseignait les logiciels de conception graphique. Elle fut rapidement confrontée à la frustration de ses élèves face à des interfaces complexes et une courbe d'apprentissage abrupte. Ce constat empirique — une asymétrie entre un besoin croissant et des outils inaccessibles — constitue la friction fondatrice de l'entreprise.</p>
+
+                <p>Ayant <strong>quitté l'université à 19 ans</strong> et essuyé les refus de plus d'une centaine d'investisseurs, Melanie Perkins s'associe à <strong>Cliff Obrecht</strong> (COO) et <strong>Cameron Adams</strong> (CTO). Canva Pty Ltd est fondée en 2012, avec une version bêta lancée le 1er janvier 2013 articulée autour d'un postulat disruptif : <em>démocratiser le design</em>.</p>
+
+                <div class="callout">
+                    <p><strong>Traction immédiate :</strong> En la seule première année d'existence, Canva attire plus de <strong>750 000 utilisateurs organiques</strong> — sans budget marketing significatif, uniquement par bouche-à-oreille et Product-Led Growth.</p>
+                </div>
+
+                <h3>Chronologie des jalons stratégiques 2013–2024</h3>
+
+                <div class="timeline">
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">Janvier 2013</span>
+                        <div class="tl-title">Lancement de la version bêta</div>
+                        <div class="tl-desc">750 000 utilisateurs en première année. Approche centrée sur l'utilisabilité et les retours communautaires.</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">2015</span>
+                        <div class="tl-title">Lancement de Canva for Work (futur Canva Pro)</div>
+                        <div class="tl-desc">Première offensive sur le marché B2B. Valorisation : 165 M$. Couverture Fortune "Most Powerful Women" pour Melanie Perkins.</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">2017</span>
+                        <div class="tl-title">Rentabilité opérationnelle atteinte</div>
+                        <div class="tl-desc">294 000 abonnés payants. Anomalie rare : rentabilité nette en hyper-croissance, sans dilution externe forcée.</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">Janvier 2018</span>
+                        <div class="tl-title">Statut de "licorne" — Levée Sequoia Capital</div>
+                        <div class="tl-desc">Levée de 40 M$ AUD. Valorisation dépassant 1 Md$ AUD. Sequoia, Blackbird, Felicis Ventures au capital.</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">Décembre 2019</span>
+                        <div class="tl-title">Canva Enterprise + Canva for Education</div>
+                        <div class="tl-desc">Levées cumulées de 155 M$ AUD. Ciblage institutionnel et verrouillage éducatif — 60 M+ d'étudiants formés à terme.</div>
+                    </div>
+                    <div class="tl-item highlight">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">Mars 2024</span>
+                        <div class="tl-title">Acquisition de Serif (suite Affinity) — ~580 M$ AUD</div>
+                        <div class="tl-desc">Tournant stratégique majeur. Canva entre de plein fouet sur le marché du design professionnel, historiquement dominé par Adobe.</div>
+                    </div>
+                    <div class="tl-item highlight">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">Octobre 2025</span>
+                        <div class="tl-title">Affinity Studio rendu gratuit pour tous</div>
+                        <div class="tl-desc">Annonce lors d'Adobe MAX. Destruction de la barrière à l'entrée du design professionnel. "Stratégie du judo" contre Adobe.</div>
+                    </div>
+                    <div class="tl-item highlight">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">Q1 2026</span>
+                        <div class="tl-title">Acquisitions Simtheory + Ortto + Cavalry + MangoAI</div>
+                        <div class="tl-desc">Basculement vers l'IA agentique et la MarTech. Canva devient une infrastructure cognitive complète.</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <span class="tl-year">S2 2026</span>
+                        <div class="tl-title">IPO sur le Nasdaq — Valorisation anticipée 195–210 Md$</div>
+                        <div class="tl-desc">ARR de 4 Md$, 265 M+ utilisateurs, 8 ans de rentabilité consécutive. Précédent Figma (+250 % J1).</div>
+                    </div>
+                </div>
+
+                <h3>Métriques de croissance historique</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Période</th>
+                                <th>Étape stratégique</th>
+                                <th>Métriques clés</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Jan. 2013</td><td>Lancement bêta — Product-Led Growth</td><td>750 000 utilisateurs en 12 mois</td></tr>
+                            <tr><td>2015</td><td>Canva for Work — offensive B2B</td><td>Valorisation 165 M$ · 50 M designs créés</td></tr>
+                            <tr><td>2017</td><td>Rentabilité nette organique</td><td>294 000 abonnés payants</td></tr>
+                            <tr><td>2018</td><td>Licorne — Sequoia Capital</td><td>Valorisation 1 Md$ AUD</td></tr>
+                            <tr><td>2019</td><td>Enterprise + Education</td><td>155 M$ AUD levés</td></tr>
+                            <tr><td>2024</td><td>Acquisition Serif/Affinity</td><td>~580 M$ AUD · 3 M+ pros Affinity</td></tr>
+                            <tr><td>2026</td><td>IPO Nasdaq (anticipée)</td><td>4 Md$ ARR · 265 M MAU · 42 Md$ val.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="chart-wrap">
+                    <span class="chart-label">Utilisateurs actifs mensuels — Évolution 2013 · 2026 (millions)</span>
+                    <canvas id="chartUsers" height="260"></canvas>
+                </div>
+
+            </section>
+
+            <!-- 2. TWO-STEP PLAN -->
+            <section class="section" id="s2">
+                <span class="section-num">02</span>
+                <h2>L'architecture philosophique<br>Le "Two-Step Plan"</h2>
+
+                <p>L'analyse de Canva serait incomplète sans sa doctrine fondatrice. Le <strong>Two-Step Plan</strong> n'est pas un appendice communicatif — c'est le système d'exploitation central qui régit l'allocation des ressources, les acquisitions et le recrutement. Il repose sur un postulat optimiste : il existe suffisamment de capital, de créativité et de bonne volonté pour résoudre les défis globaux.</p>
+
+                <div class="two-step">
+                    <div class="step-card">
+                        <span class="step-label">Étape Un</span>
+                        <h4>Construire l'une des entreprises les plus valorisées au monde</h4>
+                        <p>Créer de la valeur économique et technologique avec pour mission d'autonomiser le monde entier dans le domaine de la conception — <em>"Empower the world to design."</em></p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-label">Étape Deux</span>
+                        <h4>Faire le plus de bien possible avec ce succès</h4>
+                        <p>Utiliser l'infrastructure, la richesse et l'influence générées par l'Étape Un pour induire un changement positif à l'échelle mondiale. Ces deux étapes croissent de manière <em>symbiotique</em>, pas séquentielle.</p>
+                    </div>
+                </div>
+
+                <h3>Exécution institutionnelle — ESG et accessibilité</h3>
+                <p>En 2019, Canva rejoint l'initiative <strong>Pledge 1%</strong> : 1 % des bénéfices, des capitaux propres et du temps des employés est redistribué à la communauté. Des milliers d'organisations à but non lucratif et d'établissements scolaires bénéficient d'accès gratuits à Canva Pro. Amnesty International Australia génère en quelques minutes des campagnes visuelles pour la défense des réfugiés.</p>
+                <p>En mars 2026, Canva inaugure de nouvelles <strong>fermes solaires</strong> opérationnelles pour compenser la consommation de ses infrastructures cloud. L'entreprise reçoit le prix <strong>"Privacy by Design"</strong> et un prix d'accessibilité numérique.</p>
+
+                <div class="callout">
+                    <p><strong>Avantage concurrentiel RH :</strong> Le Two-Step Plan permet d'attirer et retenir des ingénieurs et chercheurs en IA d'élite en leur offrant non seulement des rémunérations attractives, mais une <strong>justification morale</strong> à leur production intellectuelle — un différenciateur crucial dans un marché technologique hyper-compétitif.</p>
+                </div>
+            </section>
+
+            <!-- 3. AFFINITY -->
+            <section class="section" id="s3">
+                <span class="section-num">03</span>
+                <h2>La révolution de la création professionnelle<br>L'acquisition de Serif et Affinity</h2>
+
+                <p>En 2024, Canva atteignait un plafond de verre stratégique. Pour accomplir sa mission d'autonomiser "le monde entier", l'entreprise devait conquérir le segment le plus exigeant du marché : les <strong>"1 %"</strong> de professionnels de la création, virtuellement monopolisé par Adobe Creative Cloud.</p>
+
+                <h3>3.1 L'héritage de Serif</h3>
+                <p>Serif (Europe) Ltd, fondée en 1987 à Nottingham (UK), a développé entre 2014 et 2019 une architecture logicielle entièrement nouvelle — sans code hérité — exploitant la puissance des processeurs multicœurs modernes. La suite en trois applications répondait directement au triptyque Adobe :</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-val">2014</div>
+                        <div class="stat-lbl">Affinity Designer — alternative à Illustrator</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">2015</div>
+                        <div class="stat-lbl">Affinity Photo — alternative à Photoshop</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">2019</div>
+                        <div class="stat-lbl">Affinity Publisher — alternative à InDesign</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">3 M<em>+</em></div>
+                        <div class="stat-lbl">Professionnels utilisateurs avant rachat</div>
+                    </div>
+                </div>
+
+                <h3>3.2 Motivations structurelles de l'acquisition (mars 2024)</h3>
+                <p>Canva acquiert Serif pour environ <strong>580 M$ AUD (~300 M£)</strong>. Cette opération comble mutuellement les lacunes des deux entités :</p>
+
+                <div class="two-step">
+                    <div class="step-card">
+                        <span class="step-label">Ce que Canva apportait à Affinity</span>
+                        <h4>Cloud, collaboration, distribution</h4>
+                        <p>Partage d'actifs en ligne, collaboration en temps réel, accès à 175 M+ d'utilisateurs, infrastructure cloud mondiale.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-label">Ce qu'Affinity apportait à Canva</span>
+                        <h4>Précision professionnelle, crédibilité studio</h4>
+                        <p>Outils vectoriels de précision pixel/Bézier, traitement RAW, mise en page pour l'impression — l'arsenal manquant pour séduire les directeurs artistiques.</p>
+                    </div>
+                </div>
+
+                <h3>3.3 La friction communautaire et l'engagement formel</h3>
+                <p>L'annonce a déclenché une onde de choc parmi les utilisateurs historiques d'Affinity, habitués à la culture indépendante de Serif et à son modèle de <strong>licence perpétuelle</strong>. La crainte principale : l'imposition d'un abonnement SaaS. En réponse, Canva publie un "Pledge" en 4 piliers inviolables : prix équitables, accélération du développement, accessibilité pour tous, développement orienté par la communauté.</p>
+
+                <h3>3.4 La "Stratégie du Judo" — Affinity Studio gratuit (octobre 2025)</h3>
+                <p>Le <strong>29 octobre 2025</strong>, jour exact de l'ouverture d'Adobe MAX, Canva annonce qu'Affinity Studio — une application unifiée de nouvelle génération — est <strong>perpétuellement gratuite</strong> pour tous les utilisateurs individuels. Sur un marché de 200 Md$, Canva se sert du poids d'Adobe contre lui-même, détruisant instantanément la principale barrière à l'entrée de la profession créative.</p>
+
+                <div class="magic-grid">
+                    <div class="magic-card">
+                        <span class="magic-icon">⚡</span>
+                        <h4>StudioLink — Application unifiée</h4>
+                        <p>Vectoriel, pixel et mise en page dans un seul fichier .af. Basculement instantané sans export/import.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">🎛️</span>
+                        <h4>Custom Studios</h4>
+                        <p>Espaces de travail personnalisés mélangeant les outils des différents modes, sauvegardables et partageables.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">🔬</span>
+                        <h4>Moteur haute performance</h4>
+                        <p>Zoom jusqu'à 10 000 000 %. Accélération GPU avancée, Apple Silicon optimisé, Live Tone Blend Groups.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">🔄</span>
+                        <h4>Interopérabilité maximale</h4>
+                        <p>Import PSD, AI, PDF, SVG, TIFF, IDML. Compatibilité V1/V2 Affinity. Export direct vers l'écosystème Canva.</p>
+                    </div>
+                </div>
+
+                <div class="callout">
+                    <p><strong>Monétisation indirecte :</strong> La gratuité de l'outil cache une ingénierie astucieuse. L'accès au <strong>Canva AI Studio</strong> — Generative Fill, Expand & Edit, suppression d'arrière-plan — est réservé aux abonnés Canva Premium. Affinity est le cheval de Troie parfait pour intégrer les professionnels dans l'écosystème payant de Canva.</p>
+                </div>
+            </section>
+
+            <!-- 4. ENTERPRISE -->
+            <section class="section" id="s4">
+                <span class="section-num">04</span>
+                <h2>La transition vers l'entreprise<br>Résolution de la complexité organisationnelle</h2>
+
+                <p>En 2026, <strong>72 % des DSI</strong> citent la "prolifération des applications" (App Sprawl) comme préoccupation primordiale. Canva Enterprise se positionne comme la plateforme unifiée tout-en-un qui fusionne conception, collaboration et IA au sein d'un espace sécurisé.</p>
+
+                <h3>Architecture de sécurité et gouvernance</h3>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fonctionnalité Enterprise</th>
+                                <th>Description</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>SSO + SCIM</td><td>Authentification unique et provisionnement cross-domaine</td><td>Intégration/retrait instantané des accès employés</td></tr>
+                            <tr><td>Brand Governance IA</td><td>Jusqu'à 1 000 Brand Kits avec approbation hiérarchisée</td><td>Identité visuelle cohérente à travers les organisations mondiales</td></tr>
+                            <tr><td>Brand-safe space</td><td>IA vérifiant la conformité avec la charte graphique</td><td>Réduction des risques réputationnels</td></tr>
+                            <tr><td>Analytics sectoriels</td><td>Suivi ROI du contenu visuel, connecteurs sectoriels</td><td>Justification budgétaire pour les DSI</td></tr>
+                            <tr><td>Canva Offline</td><td>Traitement local sans connectivité, sync auto à reconnexion</td><td>Adaptée aux travailleurs nomades et zones sous-équipées</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Écosystème de partenaires stratégiques</h3>
+                <p>Canva opère un virage vers un modèle de partenariat institutionnel via trois axes : <strong>revendeurs technologiques</strong> (SoftBank, CDW), <strong>agences créatives</strong> (Designit), et <strong>cabinets de conseil</strong> (Deloitte). L'implication de Deloitte signale que Canva est désormais perçu comme un <strong>moteur de transformation organisationnelle</strong>, non plus un simple outil de design. Des entreprises comme Zoom ont rapporté une réduction de <strong>66 % des coûts de conception</strong>.</p>
+            </section>
+
+            <!-- 5. IA -->
+            <section class="section" id="s5">
+                <span class="section-num">05</span>
+                <h2>La révolution de l'IA<br>De la génération statique à l'agentique</h2>
+
+                <h3>5.1 Acquisitions MarTech — Simtheory & Ortto (Q1 2026)</h3>
+                <p>Les acquisitions de <strong>Simtheory</strong> et <strong>Ortto</strong> (fondées par les frères Chris et Mike Sharkey, créateurs de Stayz) propulsent Canva au-delà de la génération visuelle sur le marché des technologies marketing (MarTech).</p>
+
+                <div class="two-step">
+                    <div class="step-card">
+                        <span class="step-label">Simtheory — Couche cognitive</span>
+                        <h4>Agents IA autonomes</h4>
+                        <p>Plateforme d'espaces de travail IA permettant la construction d'"agents personnalisés" capables d'entreprendre des processus complexes multi-étapes de manière autonome.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-label">Ortto — Couche de distribution</span>
+                        <h4>Customer Data Platform</h4>
+                        <p>CDP + moteur d'automatisation marketing. De l'idée initiale à la segmentation clients, la diffusion automatisée des campagnes et l'analyse des performances.</p>
+                    </div>
+                </div>
+
+                <h3>5.2 Canva AI 2.0 — Magic Studio</h3>
+                <p>Lancé en avril 2026, <strong>Canva AI 2.0</strong> transforme l'utilisateur d'opérateur technique en directeur conversationnel interagissant avec la machine. La suite <strong>Magic Studio</strong> intègre :</p>
+
+                <div class="magic-grid">
+                    <div class="magic-card">
+                        <span class="magic-icon">✨</span>
+                        <h4>Magic Design</h4>
+                        <p>Génère des mises en page complètes depuis des directives textuelles. Conscience de marque dynamique — apprend les styles de l'entreprise.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">🎨</span>
+                        <h4>Dream Lab</h4>
+                        <p>Génération d'images sous licence commerciale, optimisées pour le marketing B2B. 500 générations/mois pour les comptes Pro.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">✍️</span>
+                        <h4>Magic Write</h4>
+                        <p>Rédaction publicitaire avec entraînement sur la voix de marque (brand voice training). Adapte le ton, le style et le vocabulaire.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">📊</span>
+                        <h4>Canva Sheets + Magic Charts</h4>
+                        <p>Tableur natif + visualisation automatisée. Transforme des données brutes en présentations analytiques immersives.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">🎭</span>
+                        <h4>Magic Layers</h4>
+                        <p>Contrôle chirurgical sur le contenu généré. Évite l'effet "boîte noire" souvent reproché à l'IA générative.</p>
+                    </div>
+                    <div class="magic-card">
+                        <span class="magic-icon">🤖</span>
+                        <h4>Claude Desktop (IA agentique)</h4>
+                        <p>Délégation de tâches en langage naturel. L'IA génère et exécute des scripts Affinity sauvegardables pour automatiser les opérations par lots.</p>
+                    </div>
+                </div>
+
+                <h3>5.3 Architecture tarifaire de l'IA — Canva AI Pass</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Forfait</th>
+                                <th>Allocation IA</th>
+                                <th>Niveaux accessibles</th>
+                                <th>Fonctionnalités clés</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Canva Free</td>
+                                <td>Allocation de base partagée</td>
+                                <td><span class="chip chip-n">Standard + Premium</span></td>
+                                <td>4,7 M+ actifs, exportation de base</td>
+                            </tr>
+                            <tr>
+                                <td>Canva Pro / Teams</td>
+                                <td>Allocation standard augmentée</td>
+                                <td><span class="chip chip-g">Pro + add-on AI Pass</span></td>
+                                <td>Canva AI Studio dans Affinity · 141 M+ actifs premium</td>
+                            </tr>
+                            <tr>
+                                <td>Canva Business</td>
+                                <td>Allocation haut niveau</td>
+                                <td><span class="chip chip-g">+20× cap. IA de base</span></td>
+                                <td>Outils admin étendus, gestion des accès</td>
+                            </tr>
+                            <tr>
+                                <td>Canva Enterprise</td>
+                                <td>Institutionnelle max (20× Free)</td>
+                                <td><span class="chip chip-g">Premium IA sans pauses</span></td>
+                                <td>SSO/SCIM · 1 000 Brand Kits · Leonardo.Ai · Support dédié</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Add-on AI Pass</strong></td>
+                                <td><strong>Maximisation extrême</strong></td>
+                                <td><span class="chip chip-g">Jusqu'à ×40 vs Pro</span></td>
+                                <td>Standard + Premium + Ultra AI. Gestion admin des allocations par membre.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout">
+                    <p>Melanie Perkins a participé à un <em>fireside chat</em> avec <strong>Daniela Amodei</strong> (cofondatrice et présidente d'Anthropic) lors de Canva Create, focalisé sur l'<strong>IA Constitutionnelle</strong> — des cadres comportementaux fondés sur des principes inébranlables d'équité et de sécurité. Canva garantit explicitement que les œuvres traitées par l'IA <strong>ne sont jamais exploitées pour entraîner des modèles</strong> propriétaires ou publics.</p>
+                </div>
+            </section>
+
+            <!-- 6. FINANCES -->
+            <section class="section" id="s6">
+                <span class="section-num">06</span>
+                <h2>Ingénierie financière<br>Projections vers l'introduction en bourse</h2>
+
+                <h3>6.1 Métriques d'exploitation 2026</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-val">4<em>Md$</em></div>
+                        <div class="stat-lbl">ARR — fév. 2026 (croissance ~+35 %/an)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">35<em>%</em></div>
+                        <div class="stat-lbl">Part du marché du design graphique web</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">612<em>M$</em></div>
+                        <div class="stat-lbl">Total levé en 19 cycles de financement historiques</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">42<em>Md$</em></div>
+                        <div class="stat-lbl">Valorisation privée — tender offer août 2025</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">1 646<em>$</em></div>
+                        <div class="stat-lbl">Prix unitaire d'action lors du tender offer (FMV 409A)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val">~200<em>Md$</em></div>
+                        <div class="stat-lbl">Capitalisation IPO théorique (×65–70× revenus)</div>
+                    </div>
+                </div>
+
+                <div class="charts-duo">
+                    <div class="chart-wrap">
+                        <span class="chart-label">Valorisation historique (Milliards $)</span>
+                        <canvas id="chartVal" height="260"></canvas>
+                    </div>
+                    <div class="chart-wrap">
+                        <span class="chart-label">ARR annuel récurrent (Milliards $)</span>
+                        <canvas id="chartARR" height="260"></canvas>
+                    </div>
+                </div>
+
+                <h3>6.2 L'offre publique d'achat interne (Tender Offer — août 2025)</h3>
+                <p>Le conseil d'administration a orchestré une offre permettant aux employés historiques ("Canvanauts") de liquider leurs options acquises, avec un plafond de <strong>3 M$ par collaborateur</strong>. L'action évaluée à <strong>1 646,14 $</strong> a cimenté la valorisation à 42 Md$. Le tour a été significativement <strong>sursouscrit</strong> par des investisseurs institutionnels désireux d'entrer au capital avant l'IPO.</p>
+
+                <h3>6.3 Le précédent Figma et les projections IPO</h3>
+                <p>L'IPO de Figma (juillet 2025) a redéfini les multiples sectoriels : introduite à 33 $, l'action a explosé de <strong>+250 % le premier jour</strong>, atteignant 115,50 $ pour une capitalisation de 56,3 Md$ — soit un multiple de <strong>68,6× les revenus</strong>. Blackbird Ventures a réévalué sa participation dans Canva de +14 % immédiatement après cet événement.</p>
+
+                <div class="callout">
+                    <p><strong>Anomalie financière remarquable :</strong> Canva a financé l'essentiel de sa croissance et de sa R&D par ses flux de trésorerie internes — n'ayant levé que 612 M$ au total sur 19 cycles, une fraction infime comparée à son échelle. Cette indépendance financière lui confère une <strong>résilience stratégique exceptionnelle</strong> à l'approche des marchés publics.</p>
+                </div>
+
+                <h3>Synthèse — Canva en 2026</h3>
+                <p>Canva a déconstruit l'ensemble des postulats historiques régissant la production créative. L'absorption de Serif, suivie de la dissolution stratégique de son modèle de monétisation pour en faire un <strong>bien logiciel universellement gratuit</strong>, constitue un chef-d'œuvre de stratégie de plateforme. La direction a volontairement sacrifié des revenus de licences à court terme pour utiliser le marché créatif professionnel comme vecteur d'intégration vers son écosystème centralisé.</p>
+                <p>Les acquisitions de Simtheory et Ortto démontrent une acuité singulière : la génération algorithmique d'images va inéluctablement se banaliser (commoditisation). En conséquence, Canva a intégré verticalement les couches supérieures — données clients, IA agentique — mutant d'un espace de design à une <strong>infrastructure cognitive gérant le cycle complet du marketing</strong> à l'échelle de l'entreprise.</p>
+            </section>
+
+            <!-- SOURCES -->
+            <section class="section" id="sources">
+                <span class="section-num">Sources</span>
+                <h2>Références bibliographiques</h2>
+                <div class="sources-list">
+                    <div class="src"><span class="src-n">01</span><a href="https://www.canva.com" target="_blank">Canva — The Canva timeline: 10 years of empowering the world to design</a></div>
+                    <div class="src"><span class="src-n">02</span><a href="https://www.canva.com/about" target="_blank">Canva — About Canva (2026)</a></div>
+                    <div class="src"><span class="src-n">03</span><a href="https://www.canva.com/our-two-step-plan" target="_blank">Canva — Our Two-Step Plan</a></div>
+                    <div class="src"><span class="src-n">04</span><a href="https://www.businesswire.com" target="_blank">Business Wire — Canva Acquires Design Platform Affinity (mars 2024)</a></div>
+                    <div class="src"><span class="src-n">05</span><a href="https://www.canva.com" target="_blank">Canva — Introducing the all-new Affinity: Professional design, now free for everyone</a></div>
+                    <div class="src"><span class="src-n">06</span><a href="https://cmswire.com" target="_blank">CMSWire — Canva AI 2.0 Turns the Design Platform Into an Agentic Creative System</a></div>
+                    <div class="src"><span class="src-n">07</span><a href="https://www.canva.com" target="_blank">Canva — From idea to outcome: Welcoming Simtheory and Ortto</a></div>
+                    <div class="src"><span class="src-n">08</span><a href="https://secfi.com" target="_blank">Secfi — Canva IPO 2026: What Employees Should Know About Stock Options</a></div>
+                    <div class="src"><span class="src-n">09</span><a href="https://tsginvest.com" target="_blank">TSG Invest — Canva Stock: $42B Valuation — Is It a Buy?</a></div>
+                    <div class="src"><span class="src-n">10</span><a href="https://cropink.com" target="_blank">Cropink — 50+ Canva Statistics [2026]</a></div>
+                    <div class="src"><span class="src-n">11</span><a href="https://saastr.com" target="_blank">SaaStr — After Figma's Massive IPO, Could Canva IPO at $200B+?</a></div>
+                    <div class="src"><span class="src-n">12</span><a href="https://www.canva.com" target="_blank">Canva — Understanding AI Pass & AI usage</a></div>
+                    <div class="src"><span class="src-n">13</span><a href="https://en.wikipedia.org/wiki/Canva" target="_blank">Wikipedia — Canva</a></div>
+                    <div class="src"><span class="src-n">14</span><a href="https://en.wikipedia.org/wiki/Serif_Europe" target="_blank">Wikipedia — Serif Europe</a></div>
+                    <div class="src"><span class="src-n">15</span><a href="https://constellationr.com" target="_blank">Constellation Research — Canva Shakes Up MarTech Market with AI Acquisitions</a></div>
+                </div>
+            </section>
+
+        </article>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <a href="index.html" class="footer-logo">
+                <img src="Affinity_(App)_Logo.svg.png" alt="Affinity">
+                <span>Affinity Essentials 2026</span>
+            </a>
+            <p>Rapport analytique — Trajectoire stratégique de Canva 2012–2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // ── Theme ──
+        const html = document.documentElement;
+        const btn = document.getElementById('themeToggle');
+        const sun = document.getElementById('iconSun');
+        const moon = document.getElementById('iconMoon');
+
+        // ── Charts ──
+        const G = '#8EE56E';
+        const GA = a => `rgba(142,229,110,${a})`;
+        const charts = {};
+
+        function chartTheme() {
+            const dk = html.classList.contains('dark');
+            return {
+                text: dk ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.42)',
+                grid: dk ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+            };
+        }
+
+        function makeOpts(ytick, tipLabel) {
+            const t = chartTheme();
+            return {
+                responsive: true,
+                maintainAspectRatio: true,
+                animation: { duration: 500, easing: 'easeInOutQuart' },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: c => tipLabel(c.parsed.y) } }
+                },
+                scales: {
+                    x: {
+                        grid: { color: t.grid },
+                        ticks: { color: t.text, font: { size: 10, family: 'Inter' } },
+                        border: { color: 'transparent' }
+                    },
+                    y: {
+                        grid: { color: t.grid },
+                        ticks: { color: t.text, font: { size: 10, family: 'Inter' }, callback: ytick },
+                        border: { color: 'transparent' }
+                    }
+                }
+            };
+        }
+
+        function initCharts() {
+            if (!window.Chart) return;
+
+            if (charts.users) charts.users.destroy();
+            charts.users = new Chart(document.getElementById('chartUsers'), {
+                type: 'line',
+                data: {
+                    labels: ['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+                    datasets: [{
+                        data: [0.75, 2, 5, 8, 15, 20, 30, 60, 85, 100, 150, 185, 220, 265],
+                        borderColor: G, backgroundColor: GA(0.1),
+                        fill: true, tension: 0.4,
+                        pointBackgroundColor: G, pointRadius: 4, pointHoverRadius: 7, borderWidth: 2.5
+                    }]
+                },
+                options: makeOpts(v => v + ' M', v => v + ' M utilisateurs')
+            });
+
+            if (charts.val) charts.val.destroy();
+            charts.val = new Chart(document.getElementById('chartVal'), {
+                type: 'bar',
+                data: {
+                    labels: ['2015','2018','2019','2021','2023','2025','IPO est.'],
+                    datasets: [{
+                        data: [0.165, 1, 3.2, 40, 26, 42, 200],
+                        backgroundColor: [0,1,2,3,4,5,6].map(i => i === 6 ? G : GA(i < 5 ? 0.22 : 0.45)),
+                        borderColor: G, borderWidth: 1, borderRadius: 3
+                    }]
+                },
+                options: makeOpts(v => v < 1 ? (v * 1000) + 'M' : v + 'Md', v => v + ' Md$')
+            });
+
+            if (charts.arr) charts.arr.destroy();
+            charts.arr = new Chart(document.getElementById('chartARR'), {
+                type: 'line',
+                data: {
+                    labels: ['2019','2020','2021','2022','2023','2024','2026'],
+                    datasets: [{
+                        data: [0.2, 0.5, 1, 1.7, 2.5, 3.2, 4],
+                        borderColor: G, backgroundColor: GA(0.1),
+                        fill: true, tension: 0.4,
+                        pointBackgroundColor: G, pointRadius: 4, pointHoverRadius: 7, borderWidth: 2.5
+                    }]
+                },
+                options: makeOpts(v => v + ' Md', v => v + ' Md$ ARR')
+            });
+        }
+
+        function applyTheme(dark) {
+            html.classList.toggle('dark', dark);
+            sun.style.display  = dark ? 'none'  : 'block';
+            moon.style.display = dark ? 'block' : 'none';
+            initCharts();
+        }
+        applyTheme(localStorage.getItem('afTheme') === 'dark');
+        btn.addEventListener('click', () => {
+            const isDark = !html.classList.contains('dark');
+            applyTheme(isDark);
+            localStorage.setItem('afTheme', isDark ? 'dark' : 'light');
+        });
+
+        // ── TOC active ──
+        const tocLinks = document.querySelectorAll('.toc-list a[href^="#"]');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    tocLinks.forEach(a => a.classList.remove('active'));
+                    const a = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+                    if (a) a.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-15% 0px -75% 0px' });
+        document.querySelectorAll('[id]').forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>

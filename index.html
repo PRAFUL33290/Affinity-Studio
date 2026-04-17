@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affinity Essentials 2026 — Guide Complet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            /* ── Light (default) ── */
+            --bg: #ffffff;
+            --surface: #f5f5f5;
+            --surface2: #fafafa;
+            --border: #e0e0e0;
+            --text: #1a1a1a;
+            --text-muted: #888888;
+            --nav-bg: rgba(255,255,255,0.88);
+            --key-bg: #eeeeee;
+            --key-color: #333333;
+            --key-border: #d0d0d0;
+            --tip-bg: rgba(142,229,110,0.08);
+            --search-placeholder: #cccccc;
+
+            /* ── Palette Affinity officielle ── */
+            --green: #8EE56E;
+            --green-dark: #6DCF4C;
+            --accent: #8EE56E;
+
+            /* ── Compat ── */
+            --photo: #8EE56E;
+            --designer: #8EE56E;
+            --publisher: #8EE56E;
+        }
+
+        html.dark {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface2: #1a1a1a;
+            --border: #262626;
+            --text: #ffffff;
+            --text-muted: #777777;
+            --nav-bg: rgba(10,10,10,0.88);
+            --key-bg: #1e1e1e;
+            --key-color: #cccccc;
+            --key-border: #333333;
+            --tip-bg: rgba(142,229,110,0.06);
+            --search-placeholder: #2e2e2e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, .shortcut-card, .studio-card, .step-row, .persona-card,
+        .concept-card, .workflow-step, .resource-card, .conseil-card,
+        .tip-box, .search-input, .key {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ─── TOPBAR ─── */
+        nav.topnav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            transition: background 0.3s, border-color 0.3s;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo span { color: var(--green-dark); }
+        html.dark .nav-logo span { color: var(--green); }
+
+        /* ─── SIDEBAR VERTICALE ─── */
+        nav.sidenav {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 220px;
+            height: calc(100vh - 60px);
+            border-right: 1px solid var(--border);
+            background: var(--bg);
+            padding: 32px 0;
+            overflow-y: auto;
+            z-index: 100;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidenav-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            padding: 0 24px 12px;
+            display: block;
+        }
+
+        .sidenav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .sidenav-links li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 11px 24px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.3;
+        }
+
+        .sidenav-links li a svg {
+            flex-shrink: 0;
+            opacity: 0.45;
+            transition: opacity 0.2s;
+        }
+
+        .sidenav-links li a:hover {
+            color: var(--text);
+            background: var(--surface);
+        }
+
+        .sidenav-links li a:hover svg { opacity: 0.8; }
+
+        .sidenav-links li a.active {
+            color: var(--text);
+            border-left-color: var(--green);
+            background: rgba(142,229,110,0.06);
+        }
+
+        .sidenav-links li a.active svg { opacity: 1; stroke: var(--green); }
+
+        /* icône dark mode */
+        .theme-toggle svg { flex-shrink: 0; }
+
+        .sidenav-sep {
+            height: 1px;
+            background: var(--border);
+            margin: 12px 24px;
+        }
+
+        .sidenav-links li a.nav-external {
+            color: var(--green-dark);
+            font-weight: 700;
+        }
+        html.dark .sidenav-links li a.nav-external { color: var(--green); }
+
+        /* ─── BODY OFFSET ─── */
+        body { padding-left: 220px; padding-top: 60px; }
+
+        /* Hamburger mobile */
+        .nav-burger {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            width: 36px; height: 36px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: border-color 0.2s;
+        }
+        .nav-burger span {
+            display: block;
+            width: 16px; height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .nav-burger:hover { border-color: var(--text-muted); }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 120px 0 100px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: var(--text);
+            background: var(--green);
+            margin-bottom: 24px;
+            padding: 6px 14px;
+            border-radius: 2px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 32px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--green);
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin-bottom: 48px;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #1a1a1a;
+            border-radius: 2px;
+            font-weight: 800;
+        }
+
+        .btn-primary:hover { background: var(--green-dark); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover { border-color: var(--text-muted); }
+
+        /* ─── STUDIOS ─── */
+        .studios-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        .studio-card {
+            background: var(--bg);
+            padding: 40px;
+            transition: background 0.2s;
+        }
+
+        .studio-card:hover { background: var(--surface); }
+
+        .studio-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .studio-card.photo .studio-dot { background: var(--green); }
+        .studio-card.designer .studio-dot { background: var(--green); }
+        .studio-card.publisher .studio-dot { background: var(--green); }
+
+        .studio-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .studio-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* ─── SECTIONS ─── */
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .section-label.blue { color: var(--green-dark); }
+        .section-label.red { color: var(--green-dark); }
+        .section-label.orange { color: var(--green-dark); }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .section-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin-bottom: 60px;
+            line-height: 1.7;
+        }
+
+        /* ─── INSTALLATION STEPS ─── */
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .step-row {
+            background: var(--bg);
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            align-items: center;
+            padding: 32px 40px;
+            gap: 32px;
+            transition: background 0.2s;
+        }
+
+        .step-row:hover { background: var(--surface); }
+
+        .step-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--border);
+            line-height: 1;
+        }
+
+        .step-content h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .step-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 12px;
+            border-radius: 2px;
+            white-space: nowrap;
+        }
+
+        .tag-free { background: rgba(142,229,110,0.12); color: #3a8a20; border: 1px solid rgba(142,229,110,0.35); }
+        .tag-step { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+
+        .tip-box {
+            margin-top: 24px;
+            padding: 20px 24px;
+            border-left: 3px solid var(--publisher);
+            background: var(--tip-bg);
+        }
+
+        .tip-box p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .tip-box { border-left-color: var(--green); }
+        .tip-box strong { color: #3a8a20; }
+        html.dark .tip-box strong { color: var(--green); }
+
+        /* ─── PERSONAS GRID ─── */
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .persona-card {
+            background: var(--bg);
+            padding: 32px;
+            transition: background 0.2s;
+        }
+
+        .persona-card:hover { background: var(--surface); }
+
+        .persona-icon {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .persona-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .persona-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ─── CONCEPTS ─── */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .concept-card {
+            background: var(--bg);
+            padding: 48px;
+            transition: background 0.2s;
+        }
+
+        .concept-card:hover { background: var(--surface); }
+
+        .concept-card h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .concept-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .concept-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            margin-bottom: 16px;
+            border-radius: 2px;
+        }
+
+        .badge-photo { background: rgba(142,229,110,0.10); color: #3a8a20; border: 1px solid rgba(142,229,110,0.3); }
+        .badge-designer { background: rgba(142,229,110,0.10); color: #3a8a20; border: 1px solid rgba(142,229,110,0.3); }
+        html.dark .badge-photo, html.dark .badge-designer { color: var(--green); }
+        .badge-all { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+
+        /* ─── WORKFLOW ─── */
+        .workflow-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .workflow-step {
+            background: var(--bg);
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            padding: 32px 40px;
+            transition: background 0.2s;
+        }
+
+        .workflow-step:hover { background: var(--surface); }
+
+        .workflow-idx {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 24px;
+            padding-top: 3px;
+        }
+
+        .workflow-step-body h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .workflow-step-body p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ─── SHORTCUTS ─── */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--border);
+            padding: 20px 0;
+            font-size: 1.8rem;
+            color: var(--text);
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-input:focus { border-color: var(--accent); }
+        .search-input::placeholder { color: var(--search-placeholder); }
+
+        .shortcut-tabs {
+            display: flex;
+            gap: 40px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .shortcut-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 14px 0;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: color 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab-btn:hover { color: var(--text); }
+
+        .tab-btn.active { color: var(--text); }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .shortcut-card {
+            background: var(--bg);
+            padding: 28px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .shortcut-card:hover { background: var(--surface); }
+
+        .card-action {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .card-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .key-combo {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .key {
+            background: var(--key-bg);
+            color: var(--key-color);
+            padding: 5px 9px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+            border: 1px solid var(--key-border);
+        }
+
+        .key.modifier { color: #3a8a20; background: rgba(142,229,110,0.08); border-color: rgba(142,229,110,0.3); }
+        html.dark .key.modifier { color: var(--green); background: rgba(142,229,110,0.08); border-color: rgba(142,229,110,0.25); }
+
+        /* ─── RESSOURCES ─── */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .resource-card {
+            background: var(--bg);
+            padding: 40px;
+            transition: background 0.2s;
+        }
+
+        .resource-card:hover { background: var(--surface); }
+
+        .resource-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .resource-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .resource-arrow {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #3a8a20;
+            text-decoration: none;
+        }
+        html.dark .resource-arrow { color: var(--green); }
+
+        /* ─── CONSEILS ─── */
+        .conseils-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .conseil-card {
+            background: var(--bg);
+            padding: 40px;
+            transition: background 0.2s;
+        }
+
+        .conseil-card:hover { background: var(--surface); }
+
+        .conseil-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--border);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .conseil-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .conseil-card strong { color: var(--text); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 80px 0;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-top h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+        }
+
+        .footer-col h5 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .footer-col p, .footer-col a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            line-height: 1.8;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: var(--text); }
+
+        /* ─── THEME SWITCHER ─── */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--text-muted);
+            color: var(--text);
+        }
+
+        .theme-toggle .toggle-track {
+            width: 28px;
+            height: 16px;
+            background: var(--border);
+            border-radius: 100px;
+            position: relative;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        html.dark .theme-toggle .toggle-track {
+            background: var(--green);
+        }
+
+        .theme-toggle .toggle-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        html.dark .theme-toggle .toggle-thumb {
+            transform: translateX(12px);
+        }
+
+        /* ─── LOGOS ─── */
+        .nav-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .nav-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .hero-logo-block {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .hero-app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .hero-wordmark {
+            height: 36px;
+            display: block;
+        }
+
+        html.dark .hero-wordmark {
+            filter: invert(1);
+        }
+
+        .footer-wordmark-wrap {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-app-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .footer-wordmark {
+            height: 28px;
+            display: block;
+        }
+
+        html.dark .footer-wordmark {
+            filter: invert(1);
+        }
+
+        /* Tab indicator en vert */
+        .tab-btn.active::after { background: var(--green); }
+
+        /* ─── Chart ─── */
+        .chart-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 24px 20px 16px;
+            margin: 28px 0 0;
+        }
+        .chart-label {
+            font-size: 0.6rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--text-muted); margin-bottom: 16px; display: block;
+        }
+
+        /* ─── MOBILE ─── */
+        @media (max-width: 900px) {
+            body { padding-left: 0; }
+            nav.topnav { padding: 0 20px; }
+            .container { padding: 0 20px; }
+            .nav-burger { display: flex; }
+            nav.sidenav {
+                transform: translateX(-100%);
+                box-shadow: 4px 0 24px rgba(0,0,0,0.1);
+            }
+            nav.sidenav.open { transform: translateX(0); }
+            .hero { padding: 60px 0 48px; }
+            .studios-row, .concepts-grid { grid-template-columns: 1fr; }
+            .step-row { grid-template-columns: 50px 1fr; }
+            .step-tag { display: none; }
+            .shortcuts-grid { grid-template-columns: 1fr; }
+            .footer-top { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <nav class="topnav">
+        <a href="#" class="nav-logo-wrap">
+            <img src="Affinity_(App)_Logo.svg.png" alt="Affinity" class="nav-icon">
+            <span class="nav-logo">Affinity <span>Essentials</span></span>
+        </a>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button class="nav-burger" id="navBurger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <!-- Icône Soleil (mode clair actif) -->
+                <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <!-- Icône Lune (mode sombre actif) -->
+                <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR VERTICALE -->
+    <nav class="sidenav" id="sidenav">
+        <span class="sidenav-label">Navigation</span>
+        <ul class="sidenav-links">
+            <li><a href="#top">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Accueil
+            </a></li>
+            <li><a href="#pourquoi">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Pourquoi Affinity
+            </a></li>
+            <li><a href="#installation">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Installation
+            </a></li>
+            <li><a href="#interface">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                Interface
+            </a></li>
+            <li><a href="#concepts">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                Concepts
+            </a></li>
+            <li><a href="#workflow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
+                Workflow
+            </a></li>
+            <li><a href="#raccourcis">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg>
+                Raccourcis
+            </a></li>
+            <li><a href="#ressources">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Ressources
+            </a></li>
+        </ul>
+        <div class="sidenav-sep"></div>
+        <ul class="sidenav-links">
+            <li><a href="comparatif.html" class="nav-external">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Comparatif Adobe
+            </a></li>
+            <li><a href="canva.html" class="nav-external">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                Évolution Canva
+            </a></li>
+            <li><a href="ipad.html" class="nav-external">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                Version iPad
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="container">
+        <section class="hero" id="top">
+            <div class="hero-logo-block">
+                <img src="Affinity_(App)_Logo.svg.png" alt="Affinity" class="hero-app-icon">
+                <img src="Affinity-Logo-PNG-SVG-Vector.png" alt="affinity" class="hero-wordmark">
+            </div>
+            <span class="hero-label">Essentials 2026</span>
+            <h1>La suite pro<br><em>100 % gratuite.</em></h1>
+            <p class="hero-sub">Remplacez Photoshop + Illustrator + InDesign sans abonnement. Trois studios dans une seule application, non destructif, ultra rapide.</p>
+            <div class="hero-cta">
+                <a href="https://www.affinity.studio/fr_fr/get-affinity" class="btn btn-primary" target="_blank">Télécharger Affinity &rarr;</a>
+                <a href="#raccourcis" class="btn btn-outline">Voir les raccourcis</a>
+            </div>
+
+            <div class="studios-row">
+                <div class="studio-card photo">
+                    <div class="studio-dot"></div>
+                    <h3>Studio Pixel</h3>
+                    <p>Retouche photo et color grading — remplace Photoshop</p>
+                </div>
+                <div class="studio-card designer">
+                    <div class="studio-dot"></div>
+                    <h3>Studio Vectoriel</h3>
+                    <p>Design vectoriel et illustration — remplace Illustrator</p>
+                </div>
+                <div class="studio-card publisher">
+                    <div class="studio-dot"></div>
+                    <h3>Studio Mise en page</h3>
+                    <p>Mise en page et édition — remplace InDesign</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- POURQUOI -->
+    <div class="container">
+        <section id="pourquoi">
+            <span class="section-label blue">01 — Pourquoi Affinity</span>
+            <h2>Un logiciel professionnel,<br>pas un abonnement.</h2>
+            <p class="section-desc">Depuis 2026, Affinity est 100 % gratuit pour tous les particuliers via un simple compte Canva gratuit. Tout est non destructif, compatible PSD, AI, et vous passez d'un studio à l'autre en un clic.</p>
+
+            <div class="studios-row" style="margin-top: 0;">
+                <div class="studio-card photo">
+                    <div class="studio-dot"></div>
+                    <h3>100 % Gratuit</h3>
+                    <p>Via un compte Canva gratuit — aucune carte bancaire requise</p>
+                </div>
+                <div class="studio-card designer">
+                    <div class="studio-dot"></div>
+                    <h3>Tout-en-un</h3>
+                    <p>Photo + Designer + Publisher dans une seule interface fluide</p>
+                </div>
+                <div class="studio-card publisher">
+                    <div class="studio-dot"></div>
+                    <h3>Compatible</h3>
+                    <p>Ouvre les fichiers PSD, AI, EPS et PDF directement</p>
+                </div>
+            </div>
+
+            <div class="chart-wrap">
+                <span class="chart-label">Affinity vs Adobe Creative Cloud — Comparaison /10</span>
+                <canvas id="chartCompare" height="180"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <!-- INSTALLATION -->
+    <div class="container">
+        <section id="installation">
+            <span class="section-label red">02 — Installation</span>
+            <h2>Prêt en 3 minutes.</h2>
+            <p class="section-desc">Cinq étapes simples pour installer la suite complète sur Mac ou Windows.</p>
+
+            <div class="steps-list">
+                <div class="step-row">
+                    <div class="step-num">01</div>
+                    <div class="step-content">
+                        <h4>Accéder au site officiel</h4>
+                        <p>Rendez-vous sur affinity.studio/fr_fr/get-affinity</p>
+                    </div>
+                    <span class="step-tag tag-free">Gratuit</span>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">02</div>
+                    <div class="step-content">
+                        <h4>Se connecter avec Canva</h4>
+                        <p>Utilisez votre compte Canva existant ou créez-en un gratuitement</p>
+                    </div>
+                    <span class="step-tag tag-step">Compte</span>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">03</div>
+                    <div class="step-content">
+                        <h4>Choisir votre plateforme</h4>
+                        <p>Sélectionnez Mac ou Windows selon votre système</p>
+                    </div>
+                    <span class="step-tag tag-step">Plateforme</span>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">04</div>
+                    <div class="step-content">
+                        <h4>Télécharger et installer</h4>
+                        <p>Lancez l'installateur et suivez les instructions à l'écran</p>
+                    </div>
+                    <span class="step-tag tag-step">Install</span>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">05</div>
+                    <div class="step-content">
+                        <h4>Lancer l'application</h4>
+                        <p>Ouvrez Affinity — vous êtes prêt à créer</p>
+                    </div>
+                    <span class="step-tag tag-free">Done</span>
+                </div>
+            </div>
+
+            <div class="tip-box" style="margin-top: 24px;">
+                <p><strong>Astuce :</strong> Créez un dossier « Projets Affinity » sur votre bureau pour tout organiser dès le début.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- INTERFACE -->
+    <div class="container">
+        <section id="interface">
+            <span class="section-label blue">03 — Interface</span>
+            <h2>Les Personas :<br>votre espace de travail.</h2>
+            <p class="section-desc">Affinity utilise le concept des Personas — des espaces de travail adaptés à chaque tâche. Passez de l'un à l'autre en un clic depuis la barre d'outils.</p>
+
+            <div class="personas-grid">
+                <div class="persona-card">
+                    <span class="persona-icon">📷</span>
+                    <h4>Persona Photo</h4>
+                    <p>Retouche, corrections et color grading</p>
+                </div>
+                <div class="persona-card">
+                    <span class="persona-icon">🌄</span>
+                    <h4>Persona Develop</h4>
+                    <p>Développement des fichiers RAW</p>
+                </div>
+                <div class="persona-card">
+                    <span class="persona-icon">💧</span>
+                    <h4>Persona Liquify</h4>
+                    <p>Déformations et morphing</p>
+                </div>
+                <div class="persona-card">
+                    <span class="persona-icon">✨</span>
+                    <h4>Persona Tone Mapping</h4>
+                    <p>Traitement HDR avancé</p>
+                </div>
+                <div class="persona-card">
+                    <span class="persona-icon">🌅</span>
+                    <h4>Persona Panorama</h4>
+                    <p>Assemblage de panoramas</p>
+                </div>
+                <div class="persona-card">
+                    <span class="persona-icon">⚙️</span>
+                    <h4>Personnalisation</h4>
+                    <p>Glissez les panneaux, créez vos studios, enregistrez votre espace</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONCEPTS -->
+    <div class="container">
+        <section id="concepts">
+            <span class="section-label orange">04 — Concepts Essentiels</span>
+            <h2>Le socle pour<br>bien apprendre.</h2>
+            <p class="section-desc">Quatre concepts fondamentaux à maîtriser avant de commencer. Tout est non destructif : vous pouvez tout modifier après.</p>
+
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <span class="concept-badge badge-all">Universel</span>
+                    <h4>Calques</h4>
+                    <p>Tout est non destructif. Chaque élément vit sur son calque et peut être modifié, masqué, ou supprimé à tout moment sans affecter le reste.</p>
+                </div>
+                <div class="concept-card">
+                    <span class="concept-badge badge-photo">Photo</span>
+                    <h4>Calques de Réglage</h4>
+                    <p>Exposition, courbes, TSL… Appliquez des corrections sans jamais toucher à votre photo originale. Modifiables à l'infini.</p>
+                </div>
+                <div class="concept-card">
+                    <span class="concept-badge badge-all">Universel</span>
+                    <h4>Masques</h4>
+                    <p>Travaillez localement sur une zone précise de l'image. Peignez en noir pour masquer, en blanc pour révéler.</p>
+                </div>
+                <div class="concept-card">
+                    <span class="concept-badge badge-photo">Photo</span>
+                    <h4>Histogramme</h4>
+                    <p>Votre meilleur outil pour vérifier l'exposition. Lisez les ombres à gauche, les hautes lumières à droite, les tons moyens au centre.</p>
+                </div>
+            </div>
+
+            <div class="tip-box" style="margin-top: 24px;">
+                <p><strong>Règle d'or :</strong> Corrigez d'abord (exposition, balance des blancs), puis étalonnez (color grading) pour donner du caractère à vos images.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- WORKFLOW -->
+    <div class="container">
+        <section id="workflow">
+            <span class="section-label red">05 — Mini-Projet</span>
+            <h2>Retouche + Color Grading<br>en 9 étapes.</h2>
+            <p class="section-desc">Un workflow simple que vous pouvez suivre dès aujourd'hui pour transformer une photo ordinaire en image avec du caractère.</p>
+
+            <div class="workflow-list">
+                <div class="workflow-step">
+                    <span class="workflow-idx">01</span>
+                    <div class="workflow-step-body">
+                        <h4>Ouvrir la photo</h4>
+                        <p>Idéalement en format RAW pour conserver toutes les données d'exposition</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">02</span>
+                    <div class="workflow-step-body">
+                        <h4>Persona Develop — Correction de base</h4>
+                        <p>Ajustez l'Exposition et la Balance des blancs pour un point de départ neutre</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">03</span>
+                    <div class="workflow-step-body">
+                        <h4>Passer en Persona Photo</h4>
+                        <p>Cliquez sur l'icône Photo en haut pour accéder aux calques de réglage</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">04</span>
+                    <div class="workflow-step-body">
+                        <h4>Calque Courbe des tons — Contraste</h4>
+                        <p>Créez une belle courbe en S pour donner du punch et du contraste à l'image</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">05</span>
+                    <div class="workflow-step-body">
+                        <h4>Calque TSL — Couleurs ciblées</h4>
+                        <p>Ajustez les couleurs précises : peau, ciel, verts selon votre ambiance souhaitée</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">06</span>
+                    <div class="workflow-step-body">
+                        <h4>Calque Courbes RVB — Ambiance cinéma</h4>
+                        <p>Remontez les bleus dans les ombres pour un look cinématographique</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">07</span>
+                    <div class="workflow-step-body">
+                        <h4>Gradient Map ou LUT</h4>
+                        <p>Appliquez un style rapide et cohérent pour une identité visuelle forte</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">08</span>
+                    <div class="workflow-step-body">
+                        <h4>Masques locaux</h4>
+                        <p>Affinez le traitement localement sur le visage, le ciel, ou tout autre zone</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <span class="workflow-idx">09</span>
+                    <div class="workflow-step-body">
+                        <h4>Exporter</h4>
+                        <p>Fichier → Exporter → choisissez JPEG ou PNG selon votre usage</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- RACCOURCIS -->
+    <div class="container">
+        <section id="raccourcis">
+            <span class="section-label blue">06 — Raccourcis macOS</span>
+            <h2>Maîtrisez le clavier,<br>accélérez votre flux.</h2>
+
+            <div class="search-wrapper">
+                <input type="text" id="search" class="search-input" placeholder="RECHERCHER UN RACCOURCI →">
+            </div>
+
+            <nav class="shortcut-tabs" id="tabs"></nav>
+
+            <div class="shortcuts-grid" id="content"></div>
+        </section>
+    </div>
+
+    <!-- RESSOURCES -->
+    <div class="container">
+        <section id="ressources">
+            <span class="section-label orange">07 — Ressources</span>
+            <h2>Aller plus loin.</h2>
+            <p class="section-desc">Les meilleures ressources officielles gratuites pour progresser rapidement.</p>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h4>L'essentiel d'Affinity</h4>
+                    <p>Série de 9 leçons officielles en français sur le blog Affinity. Le point de départ idéal.</p>
+                    <a href="https://www.affinity.studio/fr_fr/help/" class="resource-arrow" target="_blank">Accéder &rarr;</a>
+                </div>
+                <div class="resource-card">
+                    <h4>Centre d'aide complet</h4>
+                    <p>Documentation officielle complète. Recherchez « color grading » ou « calques » pour des guides précis.</p>
+                    <a href="https://www.affinity.studio/fr_fr/help/" class="resource-arrow" target="_blank">Explorer &rarr;</a>
+                </div>
+                <div class="resource-card">
+                    <h4>Communauté française</h4>
+                    <p>Rejoignez la communauté Affinity sur Facebook ou Discord. Très active, pleine de retours d'expérience.</p>
+                    <span class="resource-arrow">Facebook / Discord</span>
+                </div>
+                <div class="resource-card">
+                    <h4>Blog officiel</h4>
+                    <p>Tutoriels pratiques réguliers publiés par l'équipe Affinity. Idéal pour rester à jour.</p>
+                    <a href="https://www.affinity.studio/fr_fr/help/" class="resource-arrow" target="_blank">Lire &rarr;</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONSEILS -->
+    <div class="container">
+        <section>
+            <span class="section-label red">08 — Conseils du Prof</span>
+            <h2>Progresser vite,<br>progresser bien.</h2>
+
+            <div class="conseils-list">
+                <div class="conseil-card">
+                    <div class="conseil-num">01</div>
+                    <p><strong>15 minutes par jour</strong> sur un mini-projet concret. La régularité bat l'intensité.</p>
+                </div>
+                <div class="conseil-card">
+                    <div class="conseil-num">02</div>
+                    <p>Sauvegardez toujours en <strong>format .afphoto</strong> (natif) pour conserver tous les calques modifiables.</p>
+                </div>
+                <div class="conseil-card">
+                    <div class="conseil-num">03</div>
+                    <p>Créez vos propres <strong>préréglages et LUTs</strong> pour gagner du temps et avoir un style cohérent.</p>
+                </div>
+                <div class="conseil-card">
+                    <div class="conseil-num">04</div>
+                    <p>Le logiciel est <strong>gratuit, puissant et magnifique</strong> — vous n'avez plus d'excuse pour commencer.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container">
+        <footer>
+            <div class="footer-top">
+                <div class="footer-wordmark-wrap">
+                    <img src="Affinity_(App)_Logo.svg.png" alt="Affinity" class="footer-app-icon">
+                    <img src="Affinity-Logo-PNG-SVG-Vector.png" alt="affinity" class="footer-wordmark">
+                </div>
+                <a href="https://www.affinity.studio/fr_fr/get-affinity" class="btn btn-primary" target="_blank">Télécharger gratuitement &rarr;</a>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h5>Suite</h5>
+                    <p>Affinity Photo<br>Affinity Designer<br>Affinity Publisher</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Guide</h5>
+                    <a href="#pourquoi">Pourquoi Affinity</a>
+                    <a href="#installation">Installation</a>
+                    <a href="#interface">Interface</a>
+                    <a href="#concepts">Concepts</a>
+                    <a href="#workflow">Workflow</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Référence</h5>
+                    <a href="#raccourcis">Raccourcis macOS</a>
+                    <a href="#ressources">Ressources</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Source</h5>
+                    <p>Affinity Essentials 2026<br>Inspiré du design officiel</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const shortcutsData = {
+            "Général": [
+                { action: "Annuler", mac: "⌘ Z" },
+                { action: "Rétablir", mac: "⌘ Y" },
+                { action: "Copier", mac: "⌘ C" },
+                { action: "Coller", mac: "⌘ V" },
+                { action: "Tout sélectionner", mac: "⌘ A" },
+                { action: "Grouper", mac: "⌘ G" },
+                { action: "Dupliquer", mac: "⌘ J" },
+                { action: "Nouveau document", mac: "⌘ N" },
+                { action: "Ouvrir", mac: "⌘ O" },
+                { action: "Enregistrer", mac: "⌘ S", note: "Format natif .afphoto" },
+                { action: "Fermer", mac: "⌘ W" },
+                { action: "Préférences", mac: "⌘ ," },
+            ],
+            "Outils": [
+                { action: "Pinceau", mac: "B" },
+                { action: "Recadrer", mac: "C" },
+                { action: "Gomme", mac: "E" },
+                { action: "Dégradé", mac: "G" },
+                { action: "Main", mac: "H" },
+                { action: "Pipette", mac: "I" },
+                { action: "Plume", mac: "P" },
+                { action: "Texte", mac: "T" },
+                { action: "Formes", mac: "U" },
+                { action: "Zoom", mac: "Z" },
+                { action: "Alterner Couleurs", mac: "X" },
+            ],
+            "Affichage": [
+                { action: "Ajuster à l'écran", mac: "⌘ 0" },
+                { action: "Zoom 100%", mac: "⌘ 1" },
+                { action: "Zoom 200%", mac: "⌘ 2" },
+                { action: "Afficher les Règles", mac: "⌘ R" },
+                { action: "Plein écran", mac: "⌃ ⌘ F" },
+                { action: "Masquer les panneaux", mac: "Tab" },
+            ],
+            "Calques": [
+                { action: "Nouveau calque Pixel", mac: "⌘ ⇧ N" },
+                { action: "Fusionner les calques", mac: "⌘ ⌥ ⇧ E" },
+                { action: "Grouper les calques", mac: "⌘ G" },
+                { action: "Dupliquer le calque", mac: "⌘ J" },
+                { action: "Monter le calque", mac: "⌘ ]" },
+                { action: "Descendre le calque", mac: "⌘ [" },
+            ],
+            "Expert": [
+                { action: "Exporter sous...", mac: "⌘ ⌥ ⇧ S" },
+                { action: "Canevas (Taille)", mac: "⌘ ⌥ C" },
+                { action: "Image (Taille)", mac: "⌘ ⌥ I" },
+                { action: "Persona Photo", mac: "⌘ 1", note: "Depuis l'icône de persona" },
+                { action: "Persona Develop", mac: "⌘ 2", note: "Depuis l'icône de persona" },
+            ]
+        };
+
+        function formatKey(keyStr) {
+            return keyStr.split(' ').map(k => {
+                const isModifier = ['⌘', '⌥', '⇧', '⌃'].includes(k);
+                return `<span class="key ${isModifier ? 'modifier' : ''}">${k}</span>`;
+            }).join('');
+        }
+
+        function renderGrid(category, data = null) {
+            const items = data || shortcutsData[category];
+            const container = document.getElementById('content');
+            container.innerHTML = '';
+
+            if (!items || items.length === 0) {
+                container.innerHTML = '<div style="padding:40px;color:var(--text-muted);font-size:0.9rem;">Aucun résultat.</div>';
+                return;
+            }
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'shortcut-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="card-action">${item.action}</div>
+                        ${item.note ? `<div class="card-note">${item.note}</div>` : ''}
+                    </div>
+                    <div class="key-combo">${formatKey(item.mac)}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function setActiveTab(category) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent === category);
+            });
+            renderGrid(category);
+
+            const root = document.documentElement;
+            root.style.setProperty('--accent', 'var(--green)');
+        }
+
+        function init() {
+            const tabContainer = document.getElementById('tabs');
+            Object.keys(shortcutsData).forEach((cat, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+                btn.textContent = cat;
+                btn.onclick = () => setActiveTab(cat);
+                tabContainer.appendChild(btn);
+            });
+            renderGrid(Object.keys(shortcutsData)[0]);
+        }
+
+        document.getElementById('search').addEventListener('input', function () {
+            const term = this.value.toLowerCase().trim();
+            if (!term) {
+                const active = document.querySelector('.tab-btn.active');
+                if (active) renderGrid(active.textContent);
+                return;
+            }
+            let allResults = [];
+            Object.keys(shortcutsData).forEach(cat => {
+                const filtered = shortcutsData[cat].filter(item =>
+                    item.action.toLowerCase().includes(term) ||
+                    item.mac.toLowerCase().includes(term)
+                );
+                allResults = [...allResults, ...filtered];
+            });
+            renderGrid('Recherche', allResults);
+        });
+
+        init();
+
+        // ── Theme toggle ──
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('themeToggle');
+        const iconSun  = document.getElementById('iconSun');
+        const iconMoon = document.getElementById('iconMoon');
+
+        // ── Compare chart ──
+        const G = '#8EE56E';
+        const GA = a => `rgba(142,229,110,${a})`;
+        let chartCompare;
+
+        function initChart() {
+            if (!window.Chart) return;
+            const dk = html.classList.contains('dark');
+            const textColor = dk ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.42)';
+            const gridColor = dk ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+            if (chartCompare) chartCompare.destroy();
+            chartCompare = new Chart(document.getElementById('chartCompare'), {
+                type: 'bar',
+                data: {
+                    labels: ['Prix', 'Accessibilité', 'Outils Pro', 'Collaboration', 'IA Intégrée', 'Compatibilité', 'Non-Destructif'],
+                    datasets: [
+                        {
+                            label: 'Adobe CC',
+                            data: [2, 4, 9, 5, 7, 8, 8],
+                            backgroundColor: 'rgba(255,82,82,0.35)',
+                            borderColor: '#FF5252', borderWidth: 1, borderRadius: 2,
+                        },
+                        {
+                            label: 'Affinity Studio',
+                            data: [10, 9, 8, 7, 6, 9, 10],
+                            backgroundColor: GA(0.45),
+                            borderColor: G, borderWidth: 1, borderRadius: 2,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: true,
+                    animation: { duration: 500 },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: { color: textColor, font: { size: 10, family: 'Inter' }, boxWidth: 10, padding: 16 }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10, family: 'Inter' } }, border: { color: 'transparent' } },
+                        y: { min: 0, max: 10, grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10, family: 'Inter' }, stepSize: 2 }, border: { color: 'transparent' } }
+                    }
+                }
+            });
+        }
+
+        function applyTheme(dark) {
+            html.classList.toggle('dark', dark);
+            iconSun.style.display  = dark ? 'none'  : 'block';
+            iconMoon.style.display = dark ? 'block' : 'none';
+            initChart();
+        }
+
+        const saved = localStorage.getItem('afTheme');
+        applyTheme(saved === 'dark');
+
+        toggleBtn.addEventListener('click', () => {
+            const isDark = !html.classList.contains('dark');
+            applyTheme(isDark);
+            localStorage.setItem('afTheme', isDark ? 'dark' : 'light');
+        });
+
+        // ── Sidebar hamburger (mobile) ──
+        const burger = document.getElementById('navBurger');
+        const sidenav = document.getElementById('sidenav');
+        burger.addEventListener('click', () => sidenav.classList.toggle('open'));
+        document.addEventListener('click', e => {
+            if (!sidenav.contains(e.target) && !burger.contains(e.target)) {
+                sidenav.classList.remove('open');
+            }
+        });
+
+        // ── Active link au scroll ──
+        const sections = document.querySelectorAll('section[id], div.container > *[id]');
+        const sideLinks = document.querySelectorAll('.sidenav-links a[href^="#"]');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    sideLinks.forEach(a => a.classList.remove('active'));
+                    const active = document.querySelector(`.sidenav-links a[href="#${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-10% 0px -80% 0px' });
+        document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>

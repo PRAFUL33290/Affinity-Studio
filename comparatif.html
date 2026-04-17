@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Stratégique — Adobe vs Canva-Affinity 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: #f5f5f5;
+            --border: #e0e0e0;
+            --text: #1a1a1a;
+            --text-muted: #888888;
+            --nav-bg: rgba(255,255,255,0.88);
+            --key-bg: #eeeeee;
+            --tip-bg: rgba(142,229,110,0.08);
+            --green: #8EE56E;
+            --green-dark: #6DCF4C;
+            --green-text: #3a8a20;
+            --adobe: #FF0000;
+            --canva: #8EE56E;
+            --table-head: #f0f0f0;
+        }
+        html.dark {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #ffffff;
+            --text-muted: #777777;
+            --nav-bg: rgba(10,10,10,0.88);
+            --key-bg: #1e1e1e;
+            --tip-bg: rgba(142,229,110,0.06);
+            --green-text: #8EE56E;
+            --table-head: #1e1e1e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body, nav, .toc-panel, table, td, th, blockquote, .tag {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAV ── */
+        nav.topnav {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+        }
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            gap: 24px;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--text); }
+        .nav-sep { color: var(--border); font-size: 1.2rem; }
+        .nav-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+        }
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover { border-color: var(--text-muted); color: var(--text); }
+        .toggle-track {
+            width: 28px; height: 16px;
+            background: var(--border);
+            border-radius: 100px;
+            position: relative;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        html.dark .toggle-track { background: var(--green); }
+        .toggle-thumb {
+            position: absolute;
+            top: 2px; left: 2px;
+            width: 12px; height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        html.dark .toggle-thumb { transform: translateX(12px); }
+
+        /* ── LAYOUT ── */
+        .page-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* ── TOC ── */
+        .toc-panel {
+            position: sticky;
+            top: 80px;
+            padding: 32px 0;
+        }
+        .toc-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: block;
+        }
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .toc-list a {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.4;
+        }
+        .toc-list a:hover {
+            color: var(--text);
+            border-left-color: var(--green);
+            background: rgba(142,229,110,0.05);
+        }
+        .toc-list a.active {
+            color: var(--green-text);
+            border-left-color: var(--green);
+            font-weight: 600;
+        }
+        html.dark .toc-list a.active { color: var(--green); }
+
+        /* ── ARTICLE ── */
+        .article {
+            padding: 60px 0 120px;
+            min-width: 0;
+        }
+
+        /* Hero rapport */
+        .report-hero {
+            padding-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 72px;
+        }
+        .report-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            background: var(--green);
+            color: #1a1a1a;
+            padding: 6px 14px;
+            border-radius: 2px;
+            margin-bottom: 28px;
+        }
+        .report-hero h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .report-hero .lead {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+        .report-meta {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .meta-item span:first-child {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+        .meta-item span:last-child {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 72px;
+            padding-bottom: 72px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section:last-child { border-bottom: none; }
+
+        .section-num {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--green-text);
+            margin-bottom: 12px;
+        }
+        html.dark .section-num { color: var(--green); }
+
+        .section h2 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 32px;
+        }
+
+        .section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--text);
+            padding-left: 16px;
+            border-left: 3px solid var(--green);
+        }
+
+        .section p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.85;
+            margin-bottom: 20px;
+        }
+        .section p strong { color: var(--text); font-weight: 700; }
+
+        /* Callout */
+        .callout {
+            padding: 24px 28px;
+            border-left: 3px solid var(--green);
+            background: var(--tip-bg);
+            margin: 32px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .callout p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        .callout strong { color: var(--green-text); }
+        html.dark .callout strong { color: var(--green); }
+
+        /* Chiffre clé */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        .stat-card {
+            background: var(--bg);
+            padding: 28px 24px;
+            transition: background 0.2s;
+        }
+        .stat-card:hover { background: var(--surface); }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Tableaux comparatifs */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 32px 0;
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        thead tr {
+            background: var(--table-head);
+            border-bottom: 2px solid var(--border);
+        }
+        thead th {
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        thead th:first-child { color: var(--text); }
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: var(--surface); }
+        tbody td {
+            padding: 16px 20px;
+            vertical-align: top;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+        tbody td:first-child {
+            color: var(--text);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .th-adobe { color: #cc2200 !important; }
+        .th-canva { color: var(--green-dark) !important; }
+        html.dark .th-canva { color: var(--green) !important; }
+
+        /* Badge dans les tables */
+        .badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 8px;
+            border-radius: 2px;
+        }
+        .badge-green { background: rgba(142,229,110,0.12); color: var(--green-text); border: 1px solid rgba(142,229,110,0.3); }
+        .badge-red { background: rgba(255,0,0,0.06); color: #cc2200; border: 1px solid rgba(255,0,0,0.15); }
+        .badge-gray { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+        html.dark .badge-green { color: var(--green); }
+
+        /* Duel visuel Adobe vs Canva */
+        .duel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        .duel-card {
+            background: var(--bg);
+            padding: 32px;
+            transition: background 0.2s;
+        }
+        .duel-card:hover { background: var(--surface); }
+        .duel-brand {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .duel-adobe .duel-brand { color: #cc2200; }
+        .duel-canva .duel-brand { color: var(--green-text); }
+        html.dark .duel-canva .duel-brand { color: var(--green); }
+        .duel-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+        .duel-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+        /* Sources */
+        .sources-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .source-item {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+        }
+        .source-item:last-child { border-bottom: none; }
+        .source-num {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--green-text);
+            flex-shrink: 0;
+            min-width: 24px;
+        }
+        html.dark .source-num { color: var(--green); }
+        .source-item a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .source-item a:hover { color: var(--text); }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 0;
+            margin-top: 0;
+        }
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .footer-logo img { width: 32px; height: 32px; border-radius: 7px; }
+        .footer-logo span {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Charts ── */
+        .chart-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 28px 24px 20px;
+            margin: 32px 0;
+        }
+        .chart-label {
+            font-size: 0.62rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--text-muted); margin-bottom: 20px; display: block;
+        }
+        .charts-duo {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 20px; margin: 32px 0;
+        }
+        .chart-legend {
+            display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap;
+        }
+        .chart-legend-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.75rem; color: var(--text-muted); font-weight: 600;
+        }
+        .chart-legend-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            .toc-panel { display: none; }
+            nav.topnav { padding: 0 20px; }
+            .footer-inner { padding: 0 20px; }
+            .duel-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="topnav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a href="index.html" class="nav-back">
+                    <img src="Affinity_(App)_Logo.svg.png" alt="Affinity" class="nav-icon">
+                    ← Accueil
+                </a>
+                <span class="nav-sep">/</span>
+                <span class="nav-title">Analyse Stratégique 2026</span>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <span id="themeLabel">Sombre</span>
+                <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </button>
+        </div>
+    </nav>
+
+    <div class="page-layout">
+
+        <!-- TABLE DES MATIÈRES -->
+        <aside class="toc-panel">
+            <span class="toc-label">Table des matières</span>
+            <ul class="toc-list">
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#s1">1. Adobe — Domination hégémonique</a></li>
+                <li><a href="#s2">2. Canva — Montée en puissance</a></li>
+                <li><a href="#s3">3. Rupture du modèle économique</a></li>
+                <li><a href="#s4">4. Architecture logicielle</a></li>
+                <li><a href="#s5">5. Typographie & Traitement RAW</a></li>
+                <li><a href="#s6">6. Motion Design</a></li>
+                <li><a href="#s7">7. Intelligence Artificielle</a></li>
+                <li><a href="#s8">8. Dynamique d'entreprise</a></li>
+                <li><a href="#s9">9. Perspectives financières</a></li>
+                <li><a href="#s10">10. Synthèse</a></li>
+                <li><a href="#sources">Sources</a></li>
+            </ul>
+        </aside>
+
+        <!-- ARTICLE -->
+        <article class="article">
+
+            <!-- HERO -->
+            <header class="report-hero" id="intro">
+                <div class="report-tag">Analyse Stratégique · 2026</div>
+                <h1>Adobe Creative Cloud face à l'Écosystème Canva‑Affinity</h1>
+                <p class="lead">L'industrie mondiale des logiciels de création numérique traverse une restructuration sans précédent. Un quasi-monopole de plusieurs décennies est aujourd'hui attaqué de manière asymétrique par une alliance hybride mêlant gratuité radicale, architecture unifiée et intelligence artificielle agentique.</p>
+                <div class="report-meta">
+                    <div class="meta-item">
+                        <span>Période analysée</span>
+                        <span>2024 – 2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>Événement clé</span>
+                        <span>Acquisition Affinity par Canva (2024)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>Choc majeur</span>
+                        <span>Suite Affinity gratuite (oct. 2025)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>Prochaine échéance</span>
+                        <span>IPO Canva — Nasdaq (S2 2026)</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 1. Adobe -->
+            <section class="section" id="s1">
+                <span class="section-num">01</span>
+                <h2>Fondations historiques et domination hégémonique d'Adobe</h2>
+
+                <p>Pendant plus de vingt ans, Adobe a façonné le <strong>langage même de la conception numérique</strong>. Ses formats propriétaires — .psd, .ai, .indd — sont devenus les vecteurs d'échange incontournables au sein des chaînes logistiques créatives. Le phénomène de <strong>vendor lock-in</strong> est tel que la maîtrise de ces logiciels constitue une condition sine qua non pour l'employabilité dans les secteurs du design.</p>
+
+                <h3>1.1 Architecture financière et modèle SaaS</h3>
+                <p>Depuis l'abandon des licences perpétuelles avec Creative Suite 6, Adobe a systématisé ses flux de revenus. La division Digital Media génère à elle seule <strong>15,55 milliards de dollars</strong> sur l'exercice fiscal 2024, avec un taux de croissance de +11 % d'une année sur l'autre.</p>
+
+                <div class="key-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">18,1 Md$</div>
+                        <div class="stat-label">Revenus totaux Adobe 2024</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30 M+</div>
+                        <div class="stat-label">Abonnés Creative Cloud actifs (2024)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">34 %</div>
+                        <div class="stat-label">Part de marché Photoshop</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">10 000</div>
+                        <div class="stat-label">Nouveaux abonnés/jour</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">23,5 Md$</div>
+                        <div class="stat-label">Revenus projetés FY2025</div>
+                    </div>
+                </div>
+
+                <div class="callout">
+                    <p><strong>Position de verrouillage :</strong> 83 % des décideurs constatent une hausse de la charge mentale de leurs équipes, et 75 % s'engagent à investir dans des outils de pointe — Adobe s'est historiquement positionné comme l'unique fournisseur répondant à ces exigences institutionnelles à grande échelle.</p>
+                </div>
+            </section>
+
+            <!-- 2. Canva -->
+            <section class="section" id="s2">
+                <span class="section-num">02</span>
+                <h2>La montée en puissance de Canva — démocratisation et expansion</h2>
+
+                <p>Fondée en 2013, Canva n'a pas cherché à concurrencer Adobe sur le terrain de la complexité technique. Elle a identifié un <strong>océan bleu</strong> : la démocratisation du design pour les non-professionnels via une interface web intuitive, la manipulation par glisser-déposer et une vaste bibliothèque de modèles.</p>
+
+                <h3>2.1 Pénétration du marché et verrouillage éducatif</h3>
+                <p>Le programme "Canva for Education" a formé plus de <strong>60 millions d'étudiants</strong> dans le monde. En habituant la génération émergente de créateurs à son interface, Canva tarit à la source le vivier de futurs utilisateurs qui auraient été formés exclusivement sur les produits Adobe.</p>
+
+                <div class="key-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">230 M</div>
+                        <div class="stat-label">Utilisateurs actifs Canva (2026)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">190</div>
+                        <div class="stat-label">Pays couverts</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">380 M$</div>
+                        <div class="stat-label">Prix d'acquisition d'Affinity (mars 2024)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3 M+</div>
+                        <div class="stat-label">Professionnels utilisant Affinity avant rachat</div>
+                    </div>
+                </div>
+
+                <h3>2.2 L'acquisition d'Affinity — cibler le cœur de métier d'Adobe</h3>
+                <p>En mars 2024, Canva acquiert <strong>Serif</strong>, l'éditeur britannique de la suite Affinity, pour environ 380 millions de dollars. Affinity Designer, Photo et Publisher avaient été développés sur un moteur entièrement repensé pour exploiter les capacités matérielles modernes — Apple Silicon, GPU multicœurs, rendu en temps réel. Cette acquisition apportait instantanément une crédibilité technique de niveau studio.</p>
+
+                <h3>2.3 Consolidation de l'écosystème (2026)</h3>
+                <p>Début 2026, Canva orchestre plusieurs acquisitions ciblées : <strong>Cavalry</strong> (motion design procédural), <strong>MangoAI</strong>, <strong>Simtheory</strong> et <strong>Ortto</strong> (création de contenu + analyse prédictive marketing), sous la direction d'un nouveau Chief Algorithms Officer venu de Netflix.</p>
+            </section>
+
+            <!-- 3. Modèle économique -->
+            <section class="section" id="s3">
+                <span class="section-num">03</span>
+                <h2>La rupture du modèle économique — gratuité et freemium intégré</h2>
+
+                <p>Le <strong>29 octobre 2025</strong>, jour exact de l'ouverture d'Adobe MAX, Canva annonce que l'intégralité de la suite Affinity Studio devient <strong>perpétuellement gratuite</strong> pour tous les utilisateurs. Une attaque frontale d'une agressivité inouïe.</p>
+
+                <div class="duel-grid">
+                    <div class="duel-card duel-canva">
+                        <span class="duel-brand">Canva — Stratégie</span>
+                        <h4>La gratuité comme produit d'appel</h4>
+                        <p>Les outils fondamentaux (vectoriel, photo, mise en page) sont offerts à 0 $. La monétisation se déplace vers l'IA générative cloud et la collaboration, accessibles via Canva Pro à 14,99 $/mois.</p>
+                    </div>
+                    <div class="duel-card duel-adobe">
+                        <span class="duel-brand">Adobe — Réponse 2026</span>
+                        <h4>Restructuration tarifaire Creative Cloud Pro</h4>
+                        <p>Le plan complet est rebaptisé "CC Pro" à 69,99 $/mois, incluant l'IA illimitée (Firefly + Gemini + Flux + Runway). Le plan Standard est introduit, mais limité à 25 crédits IA/mois.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Caractéristique</th>
+                                <th class="th-adobe">Adobe CC Pro 2026</th>
+                                <th class="th-adobe">Adobe CC Standard</th>
+                                <th class="th-canva">Canva Pro + Affinity</th>
+                                <th class="th-canva">Affinity Gratuit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Coût mensuel</td>
+                                <td>~69,99 $</td>
+                                <td>Variable</td>
+                                <td>14,99 $</td>
+                                <td><strong>0 $</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Applications bureau</td>
+                                <td>Photoshop, Illustrator, InDesign, etc.</td>
+                                <td>Versions de base</td>
+                                <td>Affinity Studio complet</td>
+                                <td>Affinity Studio complet</td>
+                            </tr>
+                            <tr>
+                                <td>Intelligence artificielle</td>
+                                <td><span class="badge badge-red">Illimité · Premium</span> Firefly + tiers</td>
+                                <td><span class="badge badge-gray">Limité</span> 25 crédits/mois</td>
+                                <td><span class="badge badge-green">Magic Studio</span> Accès complet</td>
+                                <td>Aucune IA intégrée</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile / Web</td>
+                                <td>Versions premium complètes</td>
+                                <td>Accès basique limité</td>
+                                <td>Écosystème Canva complet</td>
+                                <td>iPad prévu courant 2026</td>
+                            </tr>
+                            <tr>
+                                <td>Propriété des fichiers</td>
+                                <td>Locatif strict</td>
+                                <td>Locatif strict</td>
+                                <td>Outils locaux pérennes</td>
+                                <td><span class="badge badge-green">Pérenne</span> Format .af local</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout">
+                    <p><strong>Impact tarifaire :</strong> Des professionnels de longue date ont dénoncé des augmentations effectives de leurs factures de l'ordre de <strong>75 %</strong>. Ce rejet psychologique du modèle Adobe alimente directement l'attractivité de l'offre Canva.</p>
+                </div>
+
+                <div class="charts-duo">
+                    <div class="chart-wrap">
+                        <span class="chart-label">Comparaison multidimensionnelle — Score /10</span>
+                        <canvas id="chartRadar" height="280"></canvas>
+                        <div class="chart-legend">
+                            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#FF5252"></div>Adobe CC Pro</div>
+                            <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#8EE56E"></div>Canva + Affinity</div>
+                        </div>
+                    </div>
+                    <div class="chart-wrap">
+                        <span class="chart-label">Coût mensuel par abonnement (€/mois)</span>
+                        <canvas id="chartPrice" height="280"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Architecture -->
+            <section class="section" id="s4">
+                <span class="section-num">04</span>
+                <h2>Analyse architecturale et ergonomique — fragmentation contre unification</h2>
+
+                <h3>4.1 L'innovation StudioLink face à la dette technique d'Adobe</h3>
+                <p>En 2026, Affinity v4 consolide ses trois applications en une seule entité logicielle. Le système <strong>StudioLink</strong> permet de naviguer fluidement entre quatre onglets dans un unique document .af : <em>Layout</em>, <em>Pixel</em>, <em>Vector</em>, et <em>Typography</em>. Le basculement est instantané — aucune exportation, aucune importation.</p>
+
+                <div class="duel-grid">
+                    <div class="duel-card duel-canva">
+                        <span class="duel-brand">Affinity Studio — Architecture</span>
+                        <h4>Application unifiée, moteur moderne</h4>
+                        <p>Un seul fichier .af contient toutes les dimensions du projet. Le moteur GPU exploite nativement Apple Silicon. Zoom jusqu'à 1 000 000 % sans latence. Édition entièrement non destructive.</p>
+                    </div>
+                    <div class="duel-card duel-adobe">
+                        <span class="duel-brand">Adobe Creative Cloud — Architecture</span>
+                        <h4>Applications séparées, code hérité</h4>
+                        <p>Photoshop, Illustrator et InDesign restent des applications indépendantes. Les flux nécessitent des allers-retours via Smart Objects. La base de code accumulée sur plusieurs décennies génère une lourdeur notable sur les configurations moins récentes.</p>
+                    </div>
+                </div>
+
+                <h3>4.2 Défis de stabilité d'Affinity</h3>
+                <p>Malgré l'élégance de son architecture, Affinity a documenté plusieurs vulnérabilités critiques : systèmes de sauvegarde déclenchés par <strong>nombre de modifications</strong> (300 actions) plutôt que par intervalle de temps, cas de corruption de fichiers (mars 2023), boucles de plantage (sept. 2024), plantages à la sauvegarde (v2.6.2, avril 2025). La capacité d'Adobe à traiter des travaux d'impression massifs sans erreur de séparation des couleurs reste la <strong>référence de confiance absolue</strong> pour les professionnels de l'imprimerie.</p>
+            </section>
+
+            <!-- 5. Typo & RAW -->
+            <section class="section" id="s5">
+                <span class="section-num">05</span>
+                <h2>Typographie, traitement d'images et flux de travail</h2>
+
+                <h3>5.1 Gestion typographique — précision et lacunes internationales</h3>
+                <p>Affinity surpasse Illustrator sur certains points spécifiques : gestion des <strong>diacritiques non-Unicode</strong> avec ancrage précis, prise en charge OpenType pour le serbe et le macédonien, personnalisation rapide du soulignement. Les utilisateurs liés à Canva accèdent à la <strong>Fontsmith Collection</strong> (46 familles professionnelles).</p>
+                <p>En revanche, Affinity souffre de <strong>lacunes critiques pour les langues RTL</strong> (arabe, hébreu) : sans correctif tiers payant (RTL Fixer, 29 $), les glyphes s'affichent de gauche à droite. Adobe intègre nativement les "Adobe Asian Composers" pour les typographies moyen-orientales et sud-asiatiques.</p>
+
+                <h3>5.2 Mises à jour du traitement RAW (v3.1 — mars 2026)</h3>
+                <p>Le moteur RAW intègre le support des capteurs récents (Canon R6 Mark III, Fujifilm X-T30 III, Sony a7 V). Le Develop Studio offre un choix algorithmique de courbes tonales dès l'ouverture. Le <strong>Tone Brush</strong> et les <strong>Live Tone Blend Groups</strong> permettent une fusion photographique non destructive sans masques d'écrêtage fastidieux.</p>
+
+                <div class="callout">
+                    <p><strong>Innovation ergonomique majeure :</strong> La conversion instantanée d'une sélection de pixels en courbe vectorielle éditable démontre la fluidité permise par l'architecture StudioLink — une opération qui nécessite plusieurs étapes dans Photoshop/Illustrator.</p>
+                </div>
+            </section>
+
+            <!-- 6. Motion Design -->
+            <section class="section" id="s6">
+                <span class="section-num">06</span>
+                <h2>La conception de mouvements — la révolution procédurale</h2>
+
+                <p>Avec l'acquisition de <strong>Cavalry</strong> par Canva en 2026, l'écosystème gratuit dispose d'un outil de motion design d'une puissance redoutable. Cavalry ne clone pas After Effects — il propose un paradigme radicalement opposé.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Critère</th>
+                                <th class="th-adobe">Adobe After Effects (2026)</th>
+                                <th class="th-canva">Canva Cavalry (2026)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Paradigme</td>
+                                <td>Timeline + calques. Images-clés manuelles.</td>
+                                <td>Data-driven. Logique procédurale par nœuds.</td>
+                            </tr>
+                            <tr>
+                                <td>Points forts</td>
+                                <td>Écosystème plugins massif, intégration audio/vidéo, standard absolu des studios.</td>
+                                <td>Génération d'actifs à grande échelle, animation de foules/particules 2D, données dynamiques.</td>
+                            </tr>
+                            <tr>
+                                <td>Points faibles</td>
+                                <td>Tâches répétitives exigeant expressions JavaScript complexes, temps de rendu.</td>
+                                <td>Courbe d'apprentissage atypique, inadapté au rigging squelettique et à la post-production colorimétrique.</td>
+                            </tr>
+                            <tr>
+                                <td>Cas d'usage idéal</td>
+                                <td>Compositing professionnel, effets visuels, animation de personnages.</td>
+                                <td>Templates typographiques cinétiques, génération d'actifs par lots, automatisation marketing.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>6.2 Intégrations périphériques — DaVinci Resolve & Capture One</h3>
+                <p>L'intégration native avec <strong>DaVinci Resolve</strong> (officialisée en 2026) permet d'importer du contenu Affinity directement dans Resolve pour les overlays et écrans de fin. Les modifications dans Affinity se mettent à jour automatiquement sur la timeline. Cette synergie reproduit partiellement le "Dynamic Link" d'Adobe, mais en s'appuyant sur des logiciels tiers partageant une stratégie de monétisation freemium réussie.</p>
+            </section>
+
+            <!-- 7. IA -->
+            <section class="section" id="s7">
+                <span class="section-num">07</span>
+                <h2>La révolution de l'intelligence artificielle — génératif contre agentique</h2>
+
+                <h3>7.1 Adobe Firefly — artillerie lourde et sécurité commerciale</h3>
+                <p>En 2026, Firefly a généré plus de <strong>22 milliards d'actifs</strong>. Ses capacités dans Illustrator sont remarquables : Text to Vector, recoloration générative, génération de motifs, Generative Print Bleed, Auto Simplify Paths. L'outil <strong>Retype</strong> analyse une image pour identifier et remplacer les polices directement sur le canevas.</p>
+                <p>L'argument massue d'Adobe est <strong>légal</strong> : Firefly est entraîné exclusivement sur des données sous licence ou domaine public. Pour les entreprises Fortune 500 sensibles aux litiges droits d'auteur, cette sécurité justifie à elle seule l'abonnement CC Pro.</p>
+
+                <h3>7.2 L'IA agentique de Canva — automatisation en langage naturel</h3>
+                <p>L'innovation la plus disruptive de 2026 est l'intégration de <strong>Claude Desktop</strong> dans l'écosystème Affinity, propulsant l'IA au rang d'agent autonome. Les professionnels délèguent des tâches de production en décrivant le processus en langage naturel — l'IA génère et exécute le script dans Affinity, sauvegardable pour automatiser des opérations par lots futures.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Capacité</th>
+                                <th class="th-adobe">Adobe Firefly CC Pro</th>
+                                <th class="th-canva">Canva Magic Studio / Affinity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Positionnement</td>
+                                <td>Génération algorithmique complexe, intégration au cœur de la conception.</td>
+                                <td>Automatisation des flux, exécution rapide, production à grande échelle.</td>
+                            </tr>
+                            <tr>
+                                <td>Génération vectorielle</td>
+                                <td><span class="badge badge-red">Avancé</span> Text to Vector, Recolor, Auto Simplify</td>
+                                <td><span class="badge badge-gray">Basique</span> Via interface cloud Canva</td>
+                            </tr>
+                            <tr>
+                                <td>Reconnaissance typo</td>
+                                <td><span class="badge badge-red">Outil Retype</span> Identification depuis image</td>
+                                <td>Capacité absente</td>
+                            </tr>
+                            <tr>
+                                <td>Automatisation</td>
+                                <td>Scripts JavaScript via expressions complexes</td>
+                                <td><span class="badge badge-green">Claude Desktop</span> Langage naturel → script</td>
+                            </tr>
+                            <tr>
+                                <td>Garanties légales</td>
+                                <td><span class="badge badge-red">IP garantie</span> Modèles propriétaires stricts</td>
+                                <td>Non-entraînement sur contenu local affirmé</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout">
+                    <p>Selon le Futurum Group (étude S1 2026, 830 décideurs), <strong>39 %</strong> des décideurs s'attendent à ce que la vraie valeur de l'IA générative provienne d'agents autonomes plutôt que de simples copilotes conversationnels.</p>
+                </div>
+            </section>
+
+            <!-- 8. Entreprise -->
+            <section class="section" id="s8">
+                <span class="section-num">08</span>
+                <h2>Dynamique d'entreprise — gouvernance de marque et interopérabilité</h2>
+
+                <h3>8.1 L'écosystème unifié de Canva — du "Print Shop" au "Brand Kit"</h3>
+                <p>Les designers experts créent des logotypes et définissent des chartes graphiques dans Affinity. D'un clic, ces éléments sont injectés dans le <strong>Brand Kit institutionnel de Canva</strong>. N'importe quel employé marketing peut ensuite créer des supports en parfaite conformité avec la charte. Des entreprises comme <strong>Zoom</strong> ont rapporté une réduction de <strong>66 % des coûts de conception</strong>.</p>
+                <p>En 2026, Canva lance <strong>Canva Offline</strong> (Canva Create 2026) : traitement des fichiers locaux et édition sans connectivité, synchronisation automatique à la reconnexion. Le programme "Learn Grid" est déployé dans plus de 16 langues avec un "Print Shop" repensé (40 nouveaux supports physiques).</p>
+
+                <h3>8.2 Résistance et défis d'interopérabilité d'Adobe</h3>
+                <p>L'export d'un design vectoriel élaboré depuis Affinity vers Illustrator engendre fréquemment des centaines de <strong>masques d'écrêtage superflus</strong> qui corrompent la structure du fichier et rendent l'édition ultérieure par un partenaire Adobe virtuellement impossible. Cette incompatibilité structurelle maintient une méfiance palpable : la crainte qu'un projet d'impression à plusieurs dizaines de milliers d'euros soit altéré en prépresse contraint souvent les studios à maintenir leurs abonnements Adobe par pure nécessité de confiance.</p>
+            </section>
+
+            <!-- 9. Finance -->
+            <section class="section" id="s9">
+                <span class="section-num">09</span>
+                <h2>Implications financières et valorisation — en route vers la méga-IPO</h2>
+
+                <h3>9.1 Le précédent Figma et la température du marché</h3>
+                <p>L'IPO de Figma (juillet 2025) a redéfini les valorisations du secteur. Introduite à 33 $ par action, la frénésie boursière a fait exploser le cours de <strong>+250 %</strong> lors de la première journée, clôturant à 115,50 $ pour une capitalisation de <strong>56,3 milliards de dollars</strong>. Avec 821 millions de dollars de revenus, le marché a accordé à Figma un multiple de <strong>68,6x</strong> les revenus.</p>
+
+                <h3>9.2 Les chiffres de Canva (2026)</h3>
+                <div class="key-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">2,3 Md$</div>
+                        <div class="stat-label">Revenus annuels Canva (run rate 2026)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">42 Md$</div>
+                        <div class="stat-label">Valorisation privée (tender offer, août 2025)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">8 ans</div>
+                        <div class="stat-label">Rentabilité consécutive</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">~200 Md$</div>
+                        <div class="stat-label">Capitalisation post-IPO théorique (×65-70x revenus)</div>
+                    </div>
+                </div>
+
+                <h3>9.3 Risques du modèle freemium</h3>
+                <p>Le sacrifice délibéré des revenus de licences perpétuelles (autrefois ~165 $ par licence universelle) prive Canva d'un flux de trésorerie direct. Selon le Futurum Group, <strong>41 %</strong> des décideurs IT prévoient de réduire leurs empilements SaaS en 2026 pour générer 11 à 15 % d'économies annuelles. <strong>66 %</strong> privilégient désormais une approche "platform-first".</p>
+            </section>
+
+            <!-- 10. Synthèse -->
+            <section class="section" id="s10">
+                <span class="section-num">10</span>
+                <h2>Synthèse et perspectives du marché</h2>
+
+                <p>L'affrontement de 2026 illustre un <strong>tournant philosophique</strong> dans l'ingénierie des logiciels créatifs. L'ingéniosité de l'offensive Canva réside dans la <strong>dissociation de la valeur logicielle</strong> : transformer un outil professionnel ultra-performant en ressource totalement gratuite, tout en déplaçant la monétisation vers la collaboration cloud, la gouvernance de marque institutionnelle et l'automatisation agentique de l'IA.</p>
+
+                <p>Pour Adobe, le défi structurel est double. Gérer l'insatisfaction croissante de sa communauté qui perçoit son modèle locatif comme abusif face à une concurrence gratuite fonctionnelle. Et moderniser d'urgence une base de code historique lourde pour contrer la fluidité d'architectures nouvelles, tout en consolidant son avance en matière d'IA commercialement sécurisée (Firefly).</p>
+
+                <div class="callout">
+                    <p><strong>Bénéficiaire principal :</strong> Le professionnel créatif, libéré de la monoculture logicielle, émerge comme le grand gagnant de cette compétition féroce. Il profite simultanément d'innovations propulsées par l'IA et de l'effondrement progressif des barrières financières à la création de pointe. Le marché s'oriente inéluctablement vers un <strong>duopole hautement polarisé</strong>.</p>
+                </div>
+
+                <div class="duel-grid">
+                    <div class="duel-card duel-adobe">
+                        <span class="duel-brand">Adobe — Forces persistantes</span>
+                        <h4>La forteresse résiste</h4>
+                        <p>Standards de l'industrie (PSD, AI, INDD), chaînes d'impression professionnelle irremplaçables, IA Firefly commercialement sécurisée, profondeur du catalogue applicatif, confiance institutionnelle des Fortune 500.</p>
+                    </div>
+                    <div class="duel-card duel-canva">
+                        <span class="duel-brand">Canva-Affinity — Avantages asymétriques</span>
+                        <h4>L'offensive gagne du terrain</h4>
+                        <p>Architecture unifiée non fragmentée (StudioLink), gratuité radicale comme levier d'adoption, IA agentique (Claude Desktop), motion design procédural (Cavalry), gouvernance de marque décentralisée, IPO imminente à ~200 Md$.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOURCES -->
+            <section class="section" id="sources">
+                <span class="section-num">Sources</span>
+                <h2>Références et bibliographie</h2>
+                <div class="sources-grid">
+                    <div class="source-item"><span class="source-num">01</span><a href="https://www.businesswire.com" target="_blank">Business Wire — Canva Acquires Design Platform Affinity (2024)</a></div>
+                    <div class="source-item"><span class="source-num">02</span><a href="https://www.adobe.com" target="_blank">Adobe Annual Report 2024 — adobe.com</a></div>
+                    <div class="source-item"><span class="source-num">03</span><a href="https://www.canva.com" target="_blank">Canva — Introducing the all-new Affinity: Professional design, now free</a></div>
+                    <div class="source-item"><span class="source-num">04</span><a href="https://www.affinity.studio" target="_blank">Affinity Release Notes — Version 3.1 (mars 2026)</a></div>
+                    <div class="source-item"><span class="source-num">05</span><a href="https://www.techradar.com" target="_blank">TechRadar — Affinity by Canva (2026) review</a></div>
+                    <div class="source-item"><span class="source-num">06</span><a href="https://www.futurumgroup.com" target="_blank">Futurum Group — Canva Doubles Down on AI and Martech (2026)</a></div>
+                    <div class="source-item"><span class="source-num">07</span><a href="https://saastr.com" target="_blank">SaaStr — After Figma's Massive IPO, Could Canva IPO at $200B+?</a></div>
+                    <div class="source-item"><span class="source-num">08</span><a href="https://www.type.today" target="_blank">type.today — Affinity vs Illustrator: Typography</a></div>
+                    <div class="source-item"><span class="source-num">09</span><a href="https://superrendersfarm.com" target="_blank">SuperRenders — Cavalry Motion Design: Full Review (2026)</a></div>
+                    <div class="source-item"><span class="source-num">10</span><a href="https://www.fyresite.com" target="_blank">Fyresite — Affinity vs Adobe Creative Suite: 2026</a></div>
+                    <div class="source-item"><span class="source-num">11</span><a href="https://photoshopcafe.com" target="_blank">PhotoshopCAFE — Adobe Creative Cloud Changes & CC Pro Pricing</a></div>
+                    <div class="source-item"><span class="source-num">12</span><a href="https://www.electroiq.com" target="_blank">ElectroIQ — Adobe Creative Cloud Statistics By Revenue (2024)</a></div>
+                    <div class="source-item"><span class="source-num">13</span><a href="https://www.creativebloq.com" target="_blank">Creative Bloq — Affinity's free gambit could shatter Adobe</a></div>
+                    <div class="source-item"><span class="source-num">14</span><a href="https://wilkinson.graphics" target="_blank">Wilkinson.Graphics — Affinity is Free! ...But at What Cost?</a></div>
+                    <div class="source-item"><span class="source-num">15</span><a href="https://fueler.io" target="_blank">Fueler.io — Canva in 2026: Usage, Revenue, Valuation & Growth</a></div>
+                </div>
+            </section>
+
+        </article>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <a href="index.html" class="footer-logo">
+                <img src="Affinity_(App)_Logo.svg.png" alt="Affinity">
+                <span>Affinity Essentials 2026</span>
+            </a>
+            <p>Analyse Stratégique — Adobe vs Canva-Affinity · 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // ── Theme toggle ──
+        const html = document.documentElement;
+        const btn = document.getElementById('themeToggle');
+        const label = document.getElementById('themeLabel');
+
+        // ── Charts ──
+        const G = '#8EE56E';
+        const ADOBE_COLOR = '#FF5252';
+        const charts = {};
+
+        function chartTheme() {
+            const dk = html.classList.contains('dark');
+            return {
+                text: dk ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.42)',
+                grid: dk ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+                pointBg: dk ? '#0a0a0a' : '#ffffff',
+            };
+        }
+
+        function initCharts() {
+            if (!window.Chart) return;
+            const t = chartTheme();
+
+            // ── Radar ──
+            if (charts.radar) charts.radar.destroy();
+            charts.radar = new Chart(document.getElementById('chartRadar'), {
+                type: 'radar',
+                data: {
+                    labels: ['Rapport\nQualité/Prix', 'Outils\nPro', 'IA\nGénérative', 'Collaboration', 'Accessibilité', 'Vidéo &\nMotion', 'Mobile'],
+                    datasets: [
+                        {
+                            label: 'Adobe CC Pro',
+                            data: [2, 9, 7, 5, 3, 9, 5],
+                            borderColor: ADOBE_COLOR,
+                            backgroundColor: 'rgba(255,82,82,0.08)',
+                            pointBackgroundColor: ADOBE_COLOR,
+                            pointBorderColor: t.pointBg,
+                            pointRadius: 4, borderWidth: 2,
+                        },
+                        {
+                            label: 'Canva + Affinity',
+                            data: [10, 7, 9, 9, 10, 5, 8],
+                            borderColor: G,
+                            backgroundColor: 'rgba(142,229,110,0.1)',
+                            pointBackgroundColor: G,
+                            pointBorderColor: t.pointBg,
+                            pointRadius: 4, borderWidth: 2,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: true,
+                    animation: { duration: 500 },
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        r: {
+                            min: 0, max: 10, ticks: { display: false, stepSize: 2 },
+                            grid: { color: t.grid },
+                            angleLines: { color: t.grid },
+                            pointLabels: {
+                                color: t.text,
+                                font: { size: 10, family: 'Inter', weight: '600' }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // ── Price horizontal bar ──
+            if (charts.price) charts.price.destroy();
+            charts.price = new Chart(document.getElementById('chartPrice'), {
+                type: 'bar',
+                data: {
+                    labels: ['Adobe CC Pro', 'Adobe CC Standard', 'Canva Pro + Affinity', 'Affinity Studio seul'],
+                    datasets: [{
+                        data: [69.99, 29.99, 14.99, 0],
+                        backgroundColor: [
+                            'rgba(255,82,82,0.6)',
+                            'rgba(255,82,82,0.3)',
+                            'rgba(142,229,110,0.5)',
+                            G,
+                        ],
+                        borderColor: [ADOBE_COLOR, ADOBE_COLOR, G, G],
+                        borderWidth: 1, borderRadius: 3,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true, maintainAspectRatio: true,
+                    animation: { duration: 500 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: c => c.parsed.x + ' €/mois' } }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: t.grid },
+                            ticks: { color: t.text, font: { size: 10, family: 'Inter' }, callback: v => v + '€' },
+                            border: { color: 'transparent' }
+                        },
+                        y: {
+                            grid: { color: 'transparent' },
+                            ticks: { color: t.text, font: { size: 10, family: 'Inter' } },
+                            border: { color: 'transparent' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function applyTheme(dark) {
+            html.classList.toggle('dark', dark);
+            label.textContent = dark ? 'Clair' : 'Sombre';
+            initCharts();
+        }
+
+        const saved = localStorage.getItem('afTheme');
+        applyTheme(saved === 'dark');
+
+        btn.addEventListener('click', () => {
+            const isDark = !html.classList.contains('dark');
+            applyTheme(isDark);
+            localStorage.setItem('afTheme', isDark ? 'dark' : 'light');
+        });
+
+        // ── TOC active link on scroll ──
+        const sections = document.querySelectorAll('[id]');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(a => a.classList.remove('active'));
+                    const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        sections.forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>
